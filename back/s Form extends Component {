@@ -1,0 +1,96 @@
+[33mcommit 418647626689b4068f3fa305113eda88a1423ae2[m[33m ([m[1;36mHEAD -> [m[1;32mdavid[m[33m, [m[1;31morigin/david[m[33m)[m
+Author: Ivan David Ruiz <davidruizeas@gmail.com>
+Date:   Tue Dec 17 15:40:18 2019 -0300
+
+    error
+
+[33mcommit c7ac16b194a427c5a76ab61a27d677368f300961[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: ana sofia <sofia.asgp@gmail.com>
+Date:   Thu Dec 5 12:57:59 2019 -0300
+
+    Starter kit
+
+[33mcommit b37849aa321c368f7403e84d0e305e9612fd9cba[m
+Author: jcunanan05 <cunanan.jonathan1995@gmail.com>
+Date:   Sat Oct 26 16:04:37 2019 -0400
+
+    Add basic view
+    
+    Simple hello world that will display in the browser
+    when the user visits the localhost url.
+
+[33mcommit beed2864cd5f432c0e4eeaadfc681d3ee423ccdd[m
+Merge: 2fdd2c1 3ba7e57
+Author: jcunanan05 <cunanan.jonathan1995@gmail.com>
+Date:   Sat Oct 26 15:55:25 2019 -0400
+
+    Merge branch 'master' of github.com:jcunanan05/express-es6-sample
+
+[33mcommit 3ba7e57eea4e5b1fa1e5f34263c8ed28d216c5f5[m
+Merge: e9b4281 b7c68d4
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Mon Jun 10 10:52:51 2019 -0400
+
+    Merge pull request #1 from ralic/master
+    
+    Fix security issues
+
+[33mcommit b7c68d4420bd5d92a4ca8e26d6d606a3c2ad6672[m
+Author: Ralic Lo <raliclo@gmail.com>
+Date:   Thu May 16 21:34:11 2019 +0800
+
+    Fix security issues
+
+[33mcommit 2fdd2c14c851d78c19f66997ad05b23d7a9d7d79[m
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Fri Feb 8 00:23:19 2019 -0500
+
+    Add babel ignore tests
+
+[33mcommit e9b4281586d0c9dc7e75b3964828f07f81976b33[m
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Thu Feb 7 23:56:09 2019 -0500
+
+    Add Server watch mode
+
+[33mcommit 4eafde70dd76cddb9602adc68960f62b49201385[m
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Thu Feb 7 23:34:49 2019 -0500
+
+    Add prod script
+
+[33mcommit 5116b02906e9ca3ea70e17f3c8405945aee19236[m
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Thu Feb 7 23:27:39 2019 -0500
+
+    Make babel-node work on bin/
+
+[33mcommit 3313831ca444de64a1df61d4f5bdd6cf5359ae03[m
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Thu Feb 7 22:12:53 2019 -0500
+
+    Convert cjs import to es6 imports
+
+[33mcommit 15dbdbe2eb703a0f11e58a57c0a168d7556880ca[m
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Thu Feb 7 22:10:14 2019 -0500
+
+    Add Eslint ignore and eslint import rules
+
+[33mcommit 13b8006b9043504df70074e58b2e082d1f313377[m
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Thu Feb 7 21:50:23 2019 -0500
+
+    Add eslint
+
+[33mcommit 88bbe6c65531faed66b2ca2aed8c1819dac93974[m
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Thu Feb 7 21:41:17 2019 -0500
+
+    Add babel dependencies
+
+[33mcommit 9a02c0153a319c30b45bc16845e32af0ede01115[m
+Author: Jonathan Cunanan <j_cunanan05@yahoo.com>
+Date:   Thu Feb 7 21:34:58 2019 -0500
+
+    Initial commit with READMe
