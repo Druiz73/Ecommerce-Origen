@@ -1,49 +1,80 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import products from '../models/product';
+import multer from "multer";
 
 
-mongoose.connect('mongodb://localhost:27017/OrigenDB', {
+
+
+mongoose.connect('mongodb://localhost:27017/jokkerDB', {
     useNewUrlParser: true
 });
+
+// const storage = multer.diskStorage({
+//     destination: "../../storage/imgs",
+//     filename(req, file, cb) {
+//         console.log(file);
+//         cb(null, `${new Date()}-${file.originalname}`);
+//     },
+// });
+
+// const upload = multer({
+//     storage
+// });
 
 var router = express.Router();
 
 /* GET home page. */
-router.get('/products', function (req, res, next) {
+router.get('/', function (req, res, next) {
     products.find((error, data) => {
         if (error) {
-            res.send(error)
+            res.send(error);
         } else {
-            res.send(data)
+            res.send(data);
+
         }
-    })
+    });
 });
 
-router.post('/products', function (req, res, next) {
+router.get('/', function (req, res, next) {
+    products.find((error, data) => {
+        if (error) {
+            res.send(error);
+        } else {
+            res.send(data);
+
+        }
+    });
+});
+
+
+
+router.post('/create', function (req, res, next) {
 
     const {
-        nombre,
-        slug,
+        titulo,
         talle,
-        precio,
-        color,
+        precioMayor,
+        precioMenor,
         stock,
         descripcion,
-        productPic,
+        talles,
+        category,
+        imageUrl 
     } = req.body;
+    
     const nuevo = new products({
-        nombre: nombre,
-        slug: slug,
-        parent: parent,
+        titulo: titulo,
         talle: talle,
-        precio: precio,
-        color: color,
+        precioMayor: precioMayor,
+        precioMenor: precioMenor,
         stock: stock,
         descripcion: descripcion,
-        productPic: productPic
+        talles: talles,
+        category: category,
+        imageUrl: imageUrl
+    });
 
-    })
     nuevo.save((error, item) => {
         if (error) {
             res.send(error);
@@ -53,32 +84,30 @@ router.post('/products', function (req, res, next) {
     })
 })
 
-
-
-
-router.put('/products/:id', function (req, res, next) {
+router.put('/edit/:id', function (req, res, next) {
     products.updateOne({
-        _id: req.params.id
-    }, {
-        name: req.body.name,
-        slug: req.body.slug,
-        parent: req.body.parent,
-        talle: req.body.talle,
-        precio: req.body.precio,
-        color: req.body.color,
-        stock: req.body.stock,
-        descripcion: req.body.descripcion,
-        productPic: req.body.descripcion
-    }, (err, data) => {
-        if(err){
-            res.send(err)
-        } else {
-            res.send(data)
-        }
-    })
-})
+            _id: req.params.id,
+        }, {
+            titulo: req.body.titulo,
+            precioMayor: req.body.precioMayor,
+            precioMenor: req.body.precioMenor,
+            stock: req.body.stock,
+            descripcion: req.body.descripcion,
+            talles: req.body.talles,
+            category: req.body.category,
+            imageUrl: req.body.imageUrl,
+        },
+        (err, data) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(data)
+               
+            }
+        });
+});
 
-router.delete('/products/delete/:id', function (req, res, next) {
+router.delete('/delete/:id', function (req, res, next) {
 
     products.findOneAndDelete(({
         _id: req.params.id
@@ -89,7 +118,7 @@ router.delete('/products/delete/:id', function (req, res, next) {
             res.send(data)
         }
     });
-})
+});
 
 
 

@@ -3,14 +3,14 @@ import mongoose from 'mongoose';
 import category from '../models/category';
 
 
-mongoose.connect('mongodb://localhost:27017/OrigenDB', {
+mongoose.connect('mongodb://localhost:27017/jokkerDB', {
     useNewUrlParser: true
 });
 
 var router = express.Router();
 
 /* GET home page. */
-router.get('/categories', function (req, res, next) {
+router.get('/', function (req, res, next) {
     category.find((error, data) => {
         if (error) {
             res.send(error)
@@ -20,46 +20,35 @@ router.get('/categories', function (req, res, next) {
     })
 });
 
-router.post('/categories', function (req, res, next) {
-
+router.post('/create', function (req, res, next) {
     const {
-        name,
-        slug,
-        parent
+        nombre
     } = req.body;
     const nuevo = new category({
-        name: name,
-        slug: slug,
-        parent: parent
-
-    })
+        nombre: nombre,
+    });
     nuevo.save((error, item) => {
         if (error) {
             res.send(error);
         } else {
             res.send(item);
         }
-    })
-})
+    });
+});
 
-
-
-
-router.put('/categories/:id', function (req, res, next) {
+router.put('/edit/:id', function (req, res, next) {
     category.updateOne({
         _id: req.params.id
     }, {
-        name: req.body.name,
-        slug: req.body.slug,
-        parent: req.body.parent
+        nombre: req.body.nombre,
     }, (err, data) => {
         if(err){
             res.send(err)
         } else {
             res.send(data)
         }
-    })
-})
+    });
+});
 
 router.delete('/delete/:id', function (req, res, next) {
 
@@ -72,7 +61,7 @@ router.delete('/delete/:id', function (req, res, next) {
             res.send(data)
         }
     });
-})
+});
 
 
 

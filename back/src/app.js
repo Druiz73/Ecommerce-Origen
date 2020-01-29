@@ -21,15 +21,17 @@ app.use((req, res, next) => {
     next();
 });
 
+
 app.use(logger('dev'));
-app.use(express.json());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000 }));
 
-app.use('/', categoriesRouter);
-app.use('/', productsRouter);
-// app.use('/category', categoriesRouter);
+app.use('/products', productsRouter);
+app.use('/categories', categoriesRouter);
 // app.use('/cartItems', cartItemsRouter);
 // app.use('/orders', ordersRouter);
 // app.use('/products', productsRouter);

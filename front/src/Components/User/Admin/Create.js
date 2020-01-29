@@ -1,73 +1,179 @@
-import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React, { useState } from 'react';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-export default function Create() {
+
+export default function Create(props) {
+    const [product, setProduct] = useState({
+        titulo: "",
+        precioMayor: "",
+        precioMenor: "",
+        stock: "",
+        descripcion: "",
+        talles: [],
+        category: "",
+        imageUrl: []
+    });
+
+    const handleChange= (e)=> {
+
+        // get the files
+        let files = e.target.files;
+    
+        // Process each file
+        var allFiles = [];
+        for (var i = 0; i < files.length; i++) {
+    
+          let file = files[i];
+    
+          // Make new FileReader
+          let reader = new FileReader();
+    
+          // Convert the file to base64 text
+          reader.readAsDataURL(file);
+    
+          // on reader load somthing...
+          reader.onload = () => {
+    
+            // Make a fileInfo Object
+            let fileInfo = {
+            //   name: file.name,
+            //   type: file.type,
+            //   size: Math.round(file.size / 1000) + ' kB',
+              base64: reader.result
+            //   file: file,
+            };
+    
+            // Push it to the state
+            allFiles.push(fileInfo);
+    
+            // If all files have been proceed
+            if(allFiles.length === files.length){
+              // Apply Callback function
+              if(props.multiple) props.onDone(allFiles);
+              else props.onDone(allFiles[0]);
+            }
+          } // reader.onload
+        } // for
+      }
+      
+
+    function handleInput(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        setProduct({
+            ...product,
+            [name]: value
+        })     
+    }
+
+    function onChange(e) {
+        // current array of options
+        let index
+        // check if the check box is checked or unchecked
+        if (e.target.checked) {
+            console.log("hola")
+            // add the numerical value of the checkbox to options array
+            product.talles.push(e.target.value);
+            
+        } else {
+            // or remove the value from the unchecked checkbox from the array
+            index = product.talles.indexOf(e.target.value)
+            product.talles.splice(index, 1)
+        }
+        // update the state with the new array of options
+    }
+
     return (
-        <Form>
+        <Form className="col-8 mx-auto text-center" >
+            <h2>Crear Producto</h2>
             <FormGroup>
-                <Label for="titulo">Titulo a mostrar</Label>
-                <Input type="titulo" name="titulo" id="titulos" placeholder="nombre producto" />
+                <Label for="titulo">Producto</Label>
+                <Input type="text" name="titulo" value={product.titulo} id="titulos" placeholder="nombre producto" onChange={(e) => handleInput(e)} />
             </FormGroup>
             <FormGroup>
-                <Label for="exampleSelect">categoria</Label>
-                <Input type="select" name="select" id="exampleSelect">
-                    <option></option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                <Label for="mayor">Precio por Mayor</Label>
+                <Input type="number" name="precioMayor" id="mayor" value={product.precioMayor} placeholder="Precio x mayor" onChange={(e) => handleInput(e)} />
+            </FormGroup>
+            <FormGroup>
+                <Label for="menor">Precio por Menor</Label>
+                <Input type="number" name="precioMenor" id="menor" value={product.precioMenor} placeholder="Precio x menor" onChange={(e) => handleInput(e)} />
+            </FormGroup>
+            <FormGroup>
+                <Label for="categoria">Categoria</Label>
+                <Input type="select" name="category" value={product.category} id="categoria" onChange={(e) => handleInput(e)}>
+                    {props.category.map((element) => (
+                        <option key={element._id} defaultValue={element[0]} selected>{element.nombre}</option>
+                    ))}
                 </Input>
             </FormGroup>
             <FormGroup>
-                <Label for="exampleSelectMulti">Select Multiple</Label>
-                <Input type="select" name="selectMulti" id="exampleSelectMulti" multiple>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </Input>
+                <Label for="stock">Stock</Label>
+                <Input type="number" value={product.stock} name="stock" placeholder="stock" id="stock" onChange={(e) => handleInput(e)} />
             </FormGroup>
             <FormGroup>
-                <Label for="exampleText">Text Area</Label>
-                <Input type="textarea" name="text" id="exampleText" />
+                <Label for="descripcion">Descripcion</Label>
+                <Input type="text" value={product.descripcion} placeholder="descripcion" name="descripcion" id="descripcion" onChange={(e) => handleInput(e)} />
             </FormGroup>
             <FormGroup>
-                <Label for="exampleFile">File</Label>
-                <Input type="file" name="file" id="exampleFile" />
-                <FormText color="muted">
-                    This is some placeholder block-level help text for the above input.
-                    It's a bit lighter and easily wraps to a new line.
-                </FormText>
+                <Label for="file">Subir imagen de producto:</Label>
+                <Input className="text-center mx-auto" type="file"   multiple={props.multiple } accept="image/*" name="imageUrl" onChange={(e) => handleChange(e)} />
+                <span className="hint">Supported files: jpg, jpeg, png.</span>
             </FormGroup>
-            <FormGroup tag="fieldset">
-                <legend>Radio Buttons</legend>
-                <FormGroup check>
-                    <Label check>
-                        <Input type="radio" name="radio1" />{' '}
-                        Option one is this and that—be sure to include why it's great
-                  </Label>
-                </FormGroup>
-                <FormGroup check>
-                    <Label check>
-                        <Input type="radio" name="radio1" />{' '}
-                        Option two can be something else and selecting it will deselect option one
-                  </Label>
-                </FormGroup>
-                <FormGroup check disabled>
-                    <Label check>
-                        <Input type="radio" name="radio1" disabled />{' '}
-                        Option three is disabled
-                  </Label>
-                </FormGroup>
-            </FormGroup>
-            <FormGroup check>
+            <h5>Talles</h5>
+            <FormGroup check inline>
                 <Label check>
-                    <Input type="checkbox" />{' '}
-                    Check me out
-                </Label>
+                    <Input type="checkbox" id="s" value={"S"} onChange={(e) => onChange(e)} /> S
+                 </Label>
             </FormGroup>
-            <Button>Submit</Button>
+            <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox" id="m" value={"M"} onChange={(e) => onChange(e)} /> M
+                 </Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox" id="l" value={"L"} onChange={(e) => onChange(e)} /> L
+                 </Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox" id="xl" value={"XL"} onChange={(e) => onChange(e)} /> XL
+                 </Label>
+            </FormGroup>
+            {/* NUMEROS */}
+            <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox" id="38" value={"38"} onChange={(e) => onChange(e)} /> 38
+                 </Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox" id="39" value={"39"} onChange={(e) => onChange(e)} /> 39
+                 </Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox" id="40" value={"40"} onChange={(e) => onChange(e)} /> 40
+                 </Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox" id="41" value={"41"} onChange={(e) => onChange(e)} /> 41
+                 </Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox" id="42" value={"42"} onChange={(e) => onChange(e)} /> 42
+                 </Label>
+            </FormGroup>
+            <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox" id="43" value={"43"} onChange={(e) => onChange(e)} /> 43
+                 </Label>
+            </FormGroup>
+            <FormGroup>
+                <Button className="btn btn-warning mt-5 mx-auto" type="button" onClick={() => props.save(product.titulo, product.precioMayor, product.precioMenor, product.stock, product.descripcion, product.talles, product.category, props.imageUrl)}>Crear</Button>
+            </FormGroup>
         </Form>
     );
 }
