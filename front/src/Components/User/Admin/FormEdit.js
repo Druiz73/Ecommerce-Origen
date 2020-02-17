@@ -1,25 +1,20 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 
 export default function FormEdit(props) {
     const [product, setproduct] = useState({
         product: [],
-        id:"",
-        titulo:"",
-        precioMayor:"",
-        precioMenor:"",
-        stock:"",
-        descripcion:"",
+        id: "",
+        titulo: props.products.titulo,
+        precioMayor: "",
+        precioMenor: "",
+        stock: "",
+        descripcion: "",
         talles: [],
-        category:""
+        category: ""
     });
 
-    useEffect(() => {
-        setproduct({product: props.products});
-        console.log(props.products)
-        }, []);
-    
     function handleInput(e) {
         const name = e.target.name;
         const value = e.target.value;
@@ -27,42 +22,59 @@ export default function FormEdit(props) {
             ...product,
             [name]: value
         })
-        console.log(product)
+
     }
+
+
+    function handleModal(e) {
+        if (props.product != []) {
+            setproduct({
+                id: props.product.id,
+                titulo: props.product.titulo,
+                precioMayor: props.product.precioMayor,
+                precioMenor: props.product.precioMenor,
+                stock: props.product.stock,
+                descripcion: props.product.descripcion,
+                talles: props.product.talles,
+                category: props.product.category
+            })
+        }
+    }
+
 
     function onChange(e) {
         // current array of options
-        
+
         let index
         // check if the check box is checked or unchecked
         if (e.target.checked) {
             console.log("hola")
-          // add the numerical value of the checkbox to options array
-          product.talles.push(e.target.value)
-          console.log(product.talles)
+            // add the numerical value of the checkbox to options array
+            product.talles.push(e.target.value)
+            console.log(product.talles)
         } else {
-          // or remove the value from the unchecked checkbox from the array
-          index = product.talles.indexOf(e.target.value)
-          product.talles.splice(index, 1)
+            // or remove the value from the unchecked checkbox from the array
+            index = product.talles.indexOf(e.target.value)
+            product.talles.splice(index, 1)
         }
         // update the state with the new array of options
         // setProduct({ talles: product.talles })
-      }
+    }
 
     return (
         <div>
-            <div className="modal fade" id="editModal" role="dialog" aria-labelledby="modalEditar" aria-hidden="true" >
+            <div className="modal fade" id="editModal" role="dialog" aria-labelledby="modalEditar" aria-hidden="true"  >
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="modalEditar">EDITAR</h5>
-                            <button type="button"  className="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div className="modal-body">
+                        <div className="modal-body" >
                             <FormGroup>
-                                <Input type="text" name="titulo" value={product.titulo} id="tituloEdit" placeholder={"Nombre producto"} onChange={(e) => handleInput(e)}></Input>
+                                <Input type="text" name="titulo" value={product.titulo} id="tituloEdit" placeholder={props.products.titulo} onChange={(e) => handleInput(e)}></Input>
                             </FormGroup>
                             <FormGroup>
                                 <Input type="number" name="precioMayor" id="mayorEdit" value={product.precioMayor} placeholder="Precio x mayor" onChange={(e) => handleInput(e)} />

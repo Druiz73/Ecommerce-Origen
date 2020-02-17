@@ -74,8 +74,6 @@ export default function IndexProducts() {
                         <NavItem>
                             <NavLink href="/components/">Components</NavLink>
                         </NavItem>
-                      
-                       
                     </Nav>
                     <NavbarText>Simple Text</NavbarText>
                 </Collapse>

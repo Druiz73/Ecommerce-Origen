@@ -32,7 +32,7 @@ app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000
 
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
-// app.use('/cartItems', cartItemsRouter);
+app.use('/cartItems', cartItemsRouter);
 // app.use('/orders', ordersRouter);
 // app.use('/products', productsRouter);
 // app.use('/users', usersRouter);

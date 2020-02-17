@@ -17,6 +17,8 @@ export default function TableProducts(props) {
 });
 
 
+
+
   return (
     <div>
       <div className="container">
@@ -48,7 +50,7 @@ export default function TableProducts(props) {
             ))}
           </tbody>
         </Table>
-        <FormEdit products={product.product} edit={(id, titulo, precioMayor, precioMenor, stock, descripcion, talles) => props.edit(product.id, titulo, precioMayor, precioMenor,stock,descripcion, talles)} myId={product.id}/>
+        <FormEdit  products={product} edit={(id, titulo, precioMayor, precioMenor, stock, descripcion, talles) => props.edit(product.id, titulo, precioMayor, precioMenor,stock,descripcion, talles)} myId={product.id}/>
       </div>
     </div>
   )

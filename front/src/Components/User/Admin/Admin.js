@@ -11,25 +11,21 @@ export default class Admin extends Component {
         super(props);
         this.state = {
             products: [],
-            titulo: "",
-            precioMayor: "",
-            precioMenor: "",
-            stock: "",
-            descripcion: "",
             activeTab: "1",
             talles: [],
             category: [],
-            imageUrl: []
+            imageUrl: [],
+            nombre:""
         }
     }
     toggle = (tab) => {
         if (this.state.activeTab !== tab) this.setState({ activeTab: tab })
     }
 
-    componentDidMount() {
-        this.get();
-        this.getCategory();
-    }
+   componentDidMount(){
+       this.get();
+       this.getCategory();
+   }
 
 
     // CRUD PRODUCTOS
@@ -41,34 +37,6 @@ export default class Admin extends Component {
                     products: data
                 })
             });
-    }
-
-
-    save(titulo, precioMayor, precioMenor, stock, descripcion, talles, category,imageUrl) {
-
-        fetch("http://localhost:4000/products/create", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                titulo: titulo,
-                precioMayor: precioMayor,
-                precioMenor: precioMenor,
-                stock: stock,
-                descripcion: descripcion,
-                talles: talles,
-                category:category,
-                imageUrl: imageUrl
-            })
-        })
-            .then(resp => resp.json())
-            .then(data => {
-                this.get();
-
-                
-            })
-
     }
 
     delete(id) {
@@ -99,7 +67,6 @@ export default class Admin extends Component {
                 imageUrl: imageUrl
             })
         })
-
             .then(resp => resp.json())
             .then(data => {
                 this.get();
@@ -111,22 +78,12 @@ export default class Admin extends Component {
         fetch("http://localhost:4000/categories")
             .then(resp => resp.json())
             .then(data => {
-               
                 this.setState({
                     category: data
                 })
             });
     }
-    deleteCategory(id) {
 
-        fetch(`http://localhost:4000/categories/delete/${id}`, {
-            method: 'DELETE'
-        })
-            .catch(err => console.error(err))
-            .then((data) => {
-                this.getCategory();
-            })
-    }
     saveCategory(nombre) {
 
         fetch("http://localhost:4000/categories/create", {
@@ -138,49 +95,66 @@ export default class Admin extends Component {
                 nombre: nombre
             })
         })
-        .then(resp => resp.json())
-            .then(data => {
-                this.getCategory();
-
-                
-            })
-    }
-
-    editCategory(id, nombre) {
-        fetch("http://localhost:4000/categories/edit/" + id, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                nombre: nombre,
-            })
-        })
             .then(resp => resp.json())
             .then(data => {
-                this.getCategory();
-            });
-    };
-    getFiles(files){
+               this.getCategory();
+            })
+            this.setState({nombre:""})
+    }
+
+    deleteCategory(id) {
+        fetch(`http://localhost:4000/categories/delete/${id}`, {
+            method: 'DELETE'
+        })
+            .catch(err => console.error(err))
+            .then((data) => {
+                this.getCategory();    
+            })
+    }
+   
+
+    getFiles(files) {
         this.setState({ imageUrl: files })
-        console.log(this.state.imageUrl)
-      }
+    }
+
+    handleInput(e) {
+        const { name, value } = e.target;//destructurin de los valores enviados por el metodo onchange de cada input
+        let regex = new RegExp("^[ñíóáéú a-zA-Z0-9 /@/ /./]+$");
+        for (let i = 0; i <= value.length - 1; i++) {
+            let letra = value[i]
+            if (!regex.test(letra) || !letra === " ") {
+                return;
+            }
+        }
+        this.setState({
+            [name]: value.toUpperCase()
+        })
+    }
+
+   
 
     render() {
-        return ( 
+        return (
             <div>
                 <Nav tabs>
                     <NavItem>
                         <NavLink
                             className={classnames({ active: this.state.activeTab === '1' })}
                             onClick={() => { this.toggle('1'); }}>
-                            Crear Item
+                            Crear Categoria
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink
                             className={classnames({ active: this.state.activeTab === '2' })}
                             onClick={() => { this.toggle('2'); }}>
+                            Crear Item
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink
+                            className={classnames({ active: this.state.activeTab === '3' })}
+                            onClick={() => { this.toggle('3'); }}>
                             Editar item
                          </NavLink>
                     </NavItem>
@@ -188,16 +162,17 @@ export default class Admin extends Component {
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
                         <Row>
-                            <Col sm="12">
-                                <Create imageUrl={this.state.imageUrl} multiple={ true } onDone={(files)=> this.getFiles(files)}  save={(titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) => this.save(titulo, precioMayor, precioMenor, stock, descripcion, talles, category, this.state.imageUrl)}  category={this.state.category} />
-                                
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Category saveCategory={(nombre)=>this.saveCategory(nombre)} category={this.state.category} deleteCategory={(id)=>this.deleteCategory(id)} editCategory={(id,nombre)=>this.editCategory(id,nombre)} />
+                            <Category  handleInput={((e)=> this.handleInput(e))} category={this.state.category} nombre={this.state.nombre} saveCategory={(nombre)=>this.saveCategory(nombre)}  deleteCategory={(id) => this.deleteCategory(id)} />
                         </Row>
                     </TabPane>
                     <TabPane tabId="2">
+                        <Row>
+                            <Col sm="12">
+                                <Create imageUrl={this.state.imageUrl} multiple={true} onDone={(files) => this.getFiles(files)}  category={this.state.category} />
+                            </Col>
+                        </Row>
+                    </TabPane>
+                    <TabPane tabId="3">
                         <Row>
                             <Col sm="12">
                                 <TableProducts products={this.state.products} delete={(id) => this.delete(id)} edit={(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) => this.edit(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl)} />

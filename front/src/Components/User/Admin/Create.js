@@ -14,48 +14,56 @@ export default function Create(props) {
         imageUrl: []
     });
 
-    const handleChange= (e)=> {
+    const handleChange = (e) => {
 
         // get the files
         let files = e.target.files;
-    
+
         // Process each file
         var allFiles = [];
         for (var i = 0; i < files.length; i++) {
-    
-          let file = files[i];
-    
-          // Make new FileReader
-          let reader = new FileReader();
-    
-          // Convert the file to base64 text
-          reader.readAsDataURL(file);
-    
-          // on reader load somthing...
-          reader.onload = () => {
-    
-            // Make a fileInfo Object
-            let fileInfo = {
-            //   name: file.name,
-            //   type: file.type,
-            //   size: Math.round(file.size / 1000) + ' kB',
-              base64: reader.result
-            //   file: file,
-            };
-    
-            // Push it to the state
-            allFiles.push(fileInfo);
-    
-            // If all files have been proceed
-            if(allFiles.length === files.length){
-              // Apply Callback function
-              if(props.multiple) props.onDone(allFiles);
-              else props.onDone(allFiles[0]);
-            }
-          } // reader.onload
+
+            let file = files[i];
+
+            // Make new FileReader
+            let reader = new FileReader();
+
+            // Convert the file to base64 text
+            reader.readAsDataURL(file);
+
+            // on reader load somthing...
+            reader.onload = () => {
+
+                // Make a fileInfo Object
+                let fileInfo = {
+                    //   name: file.name,
+                    //   type: file.type,
+                    //   size: Math.round(file.size / 1000) + ' kB',
+                    base64: reader.result
+                    //   file: file,
+                };
+
+                // Push it to the state
+                allFiles.push(fileInfo);
+
+                // If all files have been proceed
+                if (allFiles.length === files.length) {
+                    // Apply Callback function
+                    if (props.multiple) props.onDone(allFiles);
+                    else props.onDone(allFiles[0]);
+                }
+            } // reader.onload
         } // for
-      }
-      
+    }
+
+    const handleCategoria = ((e) => {
+        setProduct({
+            ...product,
+            category: e.target.value
+        })
+        console.log(product.category)
+    })
+
 
     function handleInput(e) {
         const name = e.target.name;
@@ -63,7 +71,7 @@ export default function Create(props) {
         setProduct({
             ...product,
             [name]: value
-        })     
+        })
     }
 
     function onChange(e) {
@@ -74,7 +82,7 @@ export default function Create(props) {
             console.log("hola")
             // add the numerical value of the checkbox to options array
             product.talles.push(e.target.value);
-            
+
         } else {
             // or remove the value from the unchecked checkbox from the array
             index = product.talles.indexOf(e.target.value)
@@ -82,6 +90,47 @@ export default function Create(props) {
         }
         // update the state with the new array of options
     }
+
+    function save(titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) {
+
+        fetch("http://localhost:4000/products/create", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                titulo: titulo,
+                precioMayor: precioMayor,
+                precioMenor: precioMenor,
+                stock: stock,
+                descripcion: descripcion,
+                talles: talles,
+                category: category,
+                imageUrl: imageUrl
+            })
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                limpiar();
+            })
+    };
+    let imageurl = document.getElementById("image");
+    const limpiar = ((e) => {
+        (imageurl.value = null)
+        setProduct({
+            ...product,
+            titulo: "",
+            precioMayor: "",
+            precioMenor: "",
+            stock: "",
+            descripcion: "",
+            talles: [],
+            category: "",
+            imageUrl: []
+        })
+    })
+
+
 
     return (
         <Form className="col-8 mx-auto text-center" >
@@ -100,9 +149,9 @@ export default function Create(props) {
             </FormGroup>
             <FormGroup>
                 <Label for="categoria">Categoria</Label>
-                <Input type="select" name="category" value={product.category} id="categoria" onChange={(e) => handleInput(e)}>
+                <Input type="select" value={product.category} onChange={(e) => handleCategoria(e)}>
                     {props.category.map((element) => (
-                        <option key={element._id} defaultValue={element[0]} selected>{element.nombre}</option>
+                        <option key={element._id} value={element._id} defaultValue={element[0]} selected>{element.nombre}</option>
                     ))}
                 </Input>
             </FormGroup>
@@ -116,7 +165,7 @@ export default function Create(props) {
             </FormGroup>
             <FormGroup>
                 <Label for="file">Subir imagen de producto:</Label>
-                <Input className="text-center mx-auto" type="file"   multiple={props.multiple } accept="image/*" name="imageUrl" onChange={(e) => handleChange(e)} />
+                <Input className="text-center mx-auto" id="image" type="file" multiple={props.multiple} accept="image/*" name="imageUrl" onChange={(e) => handleChange(e)} />
                 <span className="hint">Supported files: jpg, jpeg, png.</span>
             </FormGroup>
             <h5>Talles</h5>
@@ -172,7 +221,7 @@ export default function Create(props) {
                  </Label>
             </FormGroup>
             <FormGroup>
-                <Button className="btn btn-warning mt-5 mx-auto" type="button" onClick={() => props.save(product.titulo, product.precioMayor, product.precioMenor, product.stock, product.descripcion, product.talles, product.category, props.imageUrl)}>Crear</Button>
+                <Button className="btn btn-warning mt-5 mx-auto" type="button" onClick={() => save(product.titulo, product.precioMayor, product.precioMenor, product.stock, product.descripcion, product.talles, product.category, props.imageUrl)}>Crear</Button>
             </FormGroup>
         </Form>
     );

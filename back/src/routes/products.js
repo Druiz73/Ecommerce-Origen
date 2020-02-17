@@ -1,28 +1,26 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import products from '../models/product';
-import multer from "multer";
-
-
-
 
 mongoose.connect('mongodb://localhost:27017/jokkerDB', {
     useNewUrlParser: true
 });
 
-// const storage = multer.diskStorage({
-//     destination: "../../storage/imgs",
-//     filename(req, file, cb) {
-//         console.log(file);
-//         cb(null, `${new Date()}-${file.originalname}`);
-//     },
-// });
-
-// const upload = multer({
-//     storage
-// });
-
 var router = express.Router();
+
+router.get('/:id', (req, res, next) => {
+    let productIds = req.params.id;
+   
+    products.find({
+            'category': {
+                $in: productIds
+            }
+        })
+        .exec((err, product) => {
+            if (err) return req.status(400).send(err)
+            return res.status(200).send(product)
+        })
+})
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -36,18 +34,39 @@ router.get('/', function (req, res, next) {
     });
 });
 
+
 router.get('/', function (req, res, next) {
     products.find((error, data) => {
         if (error) {
             res.send(error);
         } else {
             res.send(data);
-
         }
     });
 });
 
+router.get('/search', async function (req, res, next) {
+    let productos;
+    if (req.query.q) {
+        productos = await productos.find({
+            $text: {
+                $search: req.query.q
+            }
+        }, 
+        {
+            score: {
+                $meta: 'textScore'
+            }
+        }
+        ).sort({
+            score: {
+                $meta: 'textScore'
+            }
+        });
+    }
+    res.json(productos);
 
+});
 
 router.post('/create', function (req, res, next) {
 
@@ -60,9 +79,9 @@ router.post('/create', function (req, res, next) {
         descripcion,
         talles,
         category,
-        imageUrl 
+        imageUrl
     } = req.body;
-    
+
     const nuevo = new products({
         titulo: titulo,
         talle: talle,
@@ -102,7 +121,7 @@ router.put('/edit/:id', function (req, res, next) {
                 res.send(err)
             } else {
                 res.send(data)
-               
+
             }
         });
 });
