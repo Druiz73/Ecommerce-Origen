@@ -168,7 +168,7 @@ export default class Admin extends Component {
                     <TabPane tabId="2">
                         <Row>
                             <Col sm="12">
-                                <Create imageUrl={this.state.imageUrl} multiple={true} onDone={(files) => this.getFiles(files)}  category={this.state.category} />
+                                <Create imageUrl={this.state.imageUrl} multiple={true}  getProducts={() => this.get()} onDone={(files) => this.getFiles(files)}  category={this.state.category} />
                             </Col>
                         </Row>
                     </TabPane>

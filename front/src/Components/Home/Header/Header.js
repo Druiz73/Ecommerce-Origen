@@ -67,9 +67,9 @@ export default function Header(props) {
                             <Link to="/register" className="text-white flex-fill bd-highlight my-auto">Crear Cuenta</Link>
                         </div>
                         <div className="col-10 col-md-6 col-lg-4 pr-0 d-flex bd-highlight mr-lg-5">
-                            <Link to="/register" className="text-white text-center mx-sm-auto  mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Iniciar Sesión </Link>
-                            <Link to="/register" className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Mayorista </Link>
-                            <Link to="/register" className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight">Minorista</Link>
+                            <Link to="/login" className="text-white text-center mx-sm-auto  mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Iniciar Sesión </Link>
+                            <Link to="/" className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Mayorista </Link>
+                            <Link to="/" className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight">Minorista</Link>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@ export default function Header(props) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <div className="col-2">
                             <a class="navbar-brand" href="#">
-                                <img className="img-fluid" src={logo} width="120" height="120" alt="" />
+                                <Link to="/"><img className="img-fluid" src={logo} width="120" height="120" alt="" /> </Link>
                             </a>
                         </div>
                         <div className="col-6">

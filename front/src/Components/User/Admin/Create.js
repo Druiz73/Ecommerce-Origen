@@ -79,7 +79,6 @@ export default function Create(props) {
         let index
         // check if the check box is checked or unchecked
         if (e.target.checked) {
-            console.log("hola")
             // add the numerical value of the checkbox to options array
             product.talles.push(e.target.value);
 
@@ -111,7 +110,9 @@ export default function Create(props) {
         })
             .then(resp => resp.json())
             .then(data => {
+                props.getProducts();
                 limpiar();
+               
             })
     };
     let imageurl = document.getElementById("image");

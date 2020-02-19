@@ -11,6 +11,7 @@ import productsRouter from './routes/products';
 import usersRouter from './routes/users';
 
 
+
 const app = express();
 
 app.use((req, res, next) => {
@@ -33,8 +34,8 @@ app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/cartItems', cartItemsRouter);
+app.use('/user', usersRouter)
 // app.use('/orders', ordersRouter);
 // app.use('/products', productsRouter);
-// app.use('/users', usersRouter);
 
 export default app;

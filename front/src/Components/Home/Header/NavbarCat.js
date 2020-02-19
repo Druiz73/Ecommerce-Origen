@@ -17,17 +17,17 @@ export default function NavbarCat(props) {
         categories:[]
     });
 
-    function handleClick(id) {
-        fetch("http://localhost:4000/producto/" + id)
-            .then(resp => resp.json())
-            .then(data => {
-                console.log(data)
-                setItems({
+    // function handleClick(id) {
+    //     fetch("http://localhost:4000/producto/" + id)
+    //         .then(resp => resp.json())
+    //         .then(data => {
+    //             console.log(data)
+    //             setItems({
                    
-                    product: data
-                })
-            })
-    };
+    //                 product: data
+    //             })
+    //         })
+    // };
    
     function letId(id){
         return "/categories/"+id
@@ -38,11 +38,10 @@ export default function NavbarCat(props) {
         <Nav className="d-flex justify-content-between mx-auto h-5" navbar>
             {props.categories.map((element) => (
                 <NavItem>
-                <Link to={letId(element._id)}> <NavLink  className="cat text-dark"  > {element.nombre}</NavLink></Link>
+                <Link to={letId(element._id)}> <NavLink className="cat text-dark"  > {element.nombre}</NavLink></Link>
                 </NavItem>)
             )}
         </Nav>
     </Collapse>
-
     )
 }

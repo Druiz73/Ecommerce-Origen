@@ -4,9 +4,9 @@ import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 export default function FormEdit(props) {
     const [product, setproduct] = useState({
-        product: [],
+        product: "",
         id: "",
-        titulo: props.products.titulo,
+        titulo:"",
         precioMayor: "",
         precioMenor: "",
         stock: "",
@@ -15,6 +15,7 @@ export default function FormEdit(props) {
         category: ""
     });
 
+
     function handleInput(e) {
         const name = e.target.name;
         const value = e.target.value;
@@ -22,9 +23,7 @@ export default function FormEdit(props) {
             ...product,
             [name]: value
         })
-
     }
-
 
     function handleModal(e) {
         if (props.product != []) {
@@ -77,16 +76,16 @@ export default function FormEdit(props) {
                                 <Input type="text" name="titulo" value={product.titulo} id="tituloEdit" placeholder={props.products.titulo} onChange={(e) => handleInput(e)}></Input>
                             </FormGroup>
                             <FormGroup>
-                                <Input type="number" name="precioMayor" id="mayorEdit" value={product.precioMayor} placeholder="Precio x mayor" onChange={(e) => handleInput(e)} />
+                                <Input type="number" name="precioMayor" id="mayorEdit" value={product.precioMayor} placeholder={props.products.precioMayor} onChange={(e) => handleInput(e)} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type="number" name="precioMenor" id="menorEdit" value={product.precioMenor} placeholder="Precio x menor" onChange={(e) => handleInput(e)} />
+                                <Input type="number" name="precioMenor" id="menorEdit" value={product.precioMenor} placeholder={props.products.precioMenor} onChange={(e) => handleInput(e)} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type="number" value={product.stock} placeholder="Stock" name="stock" id="stockEdit" onChange={(e) => handleInput(e)} />
+                                <Input type="number" value={product.stock} placeholder={props.products.stock} name="stock" id="stockEdit" onChange={(e) => handleInput(e)} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type="text" value={product.descripcion} placeholder="descripcion" name="Descripcion" id="descripcionEdit" onChange={(e) => handleInput(e)} />
+                                <Input type="text" value={product.descripcion} placeholder={props.products.descripcion} name="Descripcion" id="descripcionEdit" onChange={(e) => handleInput(e)} />
                             </FormGroup>
                             <h5>Talles</h5>
                             <FormGroup check inline>

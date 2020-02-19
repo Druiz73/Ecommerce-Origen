@@ -10,14 +10,14 @@ var router = express.Router();
 
 router.get('/:id', (req, res, next) => {
     let productIds = req.params.id;
-   
+   console.log(productIds)
     products.find({
             'category': {
                 $in: productIds
             }
         })
         .exec((err, product) => {
-            if (err) return req.status(400).send(err)
+            if (err) return res.send(err)
             return res.status(200).send(product)
         })
 })

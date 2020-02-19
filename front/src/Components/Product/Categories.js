@@ -4,16 +4,13 @@ import ReactDOM from 'react-dom'
 
 export default function Categories() {
 const [Items, setItems] = useState({
-    products:[]
+    products:[],
+    id:""
 })
   
-
-
-    // let { slug } = match.params
-
-    useEffect(() => {
-      
-        fetch("http://localhost:4000/products/")
+let id = useParams().id;
+console.log(id)
+        fetch("http://localhost:4000/products/"+id)
         .then(resp => resp.json())
         .then(data => {
             console.log(data)
@@ -22,8 +19,7 @@ const [Items, setItems] = useState({
                 products: data
             })
         })
-    }, [])
-   
+    
 
     return (
         <div className="col-12">

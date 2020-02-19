@@ -1,15 +1,53 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import GoogleLogin from 'react-google-login';
-export default function Login() {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 
-  const responseGoogle = (response) => {
-    console.log(response);
+export default function Login() {
+  const [login, setLogin] = useState({
+    email: '',
+    password: ''
+  })
+
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  // }
+
+  function handleInput(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    setLogin({
+      [name]: value
+    })
   }
 
+  function handleLogin(email, password) {
+
+    fetch("http://localhost:4000/user/login", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    })
+      .then(res => {
+        console.log(res)
+        localStorage.setItem('usertoken', res.data)
+        return res.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+
   return (
-    <div className="app flex-row align-items-center">
+    <div className="app flex-row align-items-center mt-5 mb-5">
       <Container>
         <Row className="justify-content-center">
           <Col md="8">
@@ -18,35 +56,35 @@ export default function Login() {
                 <CardBody>
                   <Form>
                     <h1>Login</h1>
-                    <p className="text-muted">Sign In to your account</p>
+                    <p className="text-muted">Ingrese Su Cuenta</p>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="icon-user"></i>
+                          <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" placeholder="Username" autoComplete="username" />
+                      <Input type="text" value={login.email} name="email" placeholder="email" autoComplete="username" onChange={(e) => handleInput(e)} />
                     </InputGroup>
                     <InputGroup className="mb-4">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="icon-lock"></i>
+                          <FontAwesomeIcon icon={faLock}></FontAwesomeIcon>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" placeholder="Password" autoComplete="current-password" />
+                      <Input type="password" value={login.password} name="password" placeholder="Password" autoComplete="current-password" onChange={(e) => handleInput(e)} />
                     </InputGroup>
                     <Row>
                       <Col xs="6">
-                        <Button color="primary" className="px-4">Login</Button>
+                        <Button onClick={(email, password) => handleLogin(login.email, login.password)} color="primary" className="px-4">Login</Button>
                       </Col>
                       <Col xs="6" className="text-right">
-                        <Button color="link" className="px-0">Forgot password?</Button>
+                        <Button color="link" className="px-0">Olvidaste la contraseña?</Button>
                       </Col>
                     </Row>
                   </Form>
                 </CardBody>
-                <p>Or Sign In with google</p>
-                <GoogleLogin
+                {/* <p>Or Sign In with google</p> */}
+                {/* <GoogleLogin
                   clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
                   render={renderProps => (
                     <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
@@ -55,22 +93,22 @@ export default function Login() {
                   onSuccess={responseGoogle}
                   onFailure={responseGoogle}
                   cookiePolicy={'single_host_origin'}
-                />
+                /> */}
               </Card>
-              <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
+              <Card className="text-white bg-dark py-5 d-md-down-none" style={{ width: '44%' }}>
                 <CardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
+                    <h2>Crear Cuenta</h2>
+                    <p>Registrate! solo te tomara unos pocos minutos</p>
                     <Link to="/register">
-                      <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
+                      <Button color="primary" className="mt-3" active tabIndex={-1}>Registrarse</Button>
                     </Link>
                   </div>
                 </CardBody>
               </Card>
             </CardGroup>
           </Col>
+
         </Row>
       </Container>
     </div>
