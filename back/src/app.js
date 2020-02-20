@@ -9,6 +9,7 @@ import cartItemsRouter from './routes/cartItems';
 import ordersRouter from './routes/orders';
 import productsRouter from './routes/products';
 import usersRouter from './routes/users';
+import registerRouter from './routes/register';
 
 
 
@@ -34,7 +35,8 @@ app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/cartItems', cartItemsRouter);
-app.use('/user', usersRouter)
+app.use('/user', usersRouter);
+app.use('/register', registerRouter);
 // app.use('/orders', ordersRouter);
 // app.use('/products', productsRouter);
 

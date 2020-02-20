@@ -141,25 +141,4 @@ router.delete('/delete/:id', function (req, res, next) {
 
 
 
-// router.get('/pagination', function (req, res, next) {
-//     Investment.find((error, data) => {
-//         let cant = 3;
-//         let desde = 0;
-//         let cantInv = data.length;
-//         let paginas = cantInv / cant;
-//         paginas = Math.ceil(paginas)
-//         console.log(cantInv)
-//         if (error) {
-//             res.send(error)
-//         } else {
-//             res.send({
-//                 results: data.slice(desde, desde + cant),
-//                 totalInv: data.length,
-//                 cantPaginas: paginas
-//             });
-
-//         }
-//     })
-// });
-
 export default router;
