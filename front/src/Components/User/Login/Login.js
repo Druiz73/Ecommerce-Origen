@@ -5,7 +5,7 @@ import GoogleLogin from 'react-google-login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 
-export default function Login() {
+export default function Login(props) {
   const [login, setLogin] = useState({
     email: '',
     password: ''
@@ -35,14 +35,18 @@ export default function Login() {
         password: password
       })
     })
-      .then(res => {
-        console.log(res)
-        localStorage.setItem('usertoken', res.data)
-        return res.data
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    .then(response => {
+      if (response) {
+        props.history.push(`/profile`)
+      }
+      localStorage.setItem('usertoken', response.data)
+      return response.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+
   }
 
 

@@ -1,51 +1,51 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAt, faLock,faUser } from '@fortawesome/free-solid-svg-icons'
+import { faAt, faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 class Register extends Component {
   state = {
-    firstname:"",
-    lastname:"",
-    email:"",
-    password:"",
-    check:""
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    check: ""
   }
 
-   handleInput(e) {
+  handleInput(e) {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({
-        [name]: value
+      [name]: value
     })
     console.log(this.state)
-}
-
-
-onClick (firstName, lastName, email, password){
-
-  if(this.state.password === this.state.check){
-    console.log("hola")
-    fetch("http://localhost:4000/user/register", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password
-      })
-    })
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data)
-      })
   }
-  else{
-    alert("las contraseñas no coinciden")
+
+
+  onClick(firstName, lastName, email, password) {
+
+    if (this.state.password === this.state.check) {
+      console.log("hola")
+      fetch("http://localhost:4000/user/register", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password
+        })
+      })
+        .then(resp => resp.json())
+        .then(data => {
+          console.log(data)
+        })
+    }
+    else {
+      alert("las contraseñas no coinciden")
+    }
   }
-}
 
 
   render() {
@@ -62,34 +62,34 @@ onClick (firstName, lastName, email, password){
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
+                          <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" value={this.state.firstname} name="firstname" placeholder="nombre" autoComplete="name" onChange={(e)=>this.handleInput(e)} />
+                      <Input type="text" value={this.state.firstName} name="firstName" placeholder="nombre" autoComplete="name" onChange={(e) => this.handleInput(e)} />
                     </InputGroup>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
+                          <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" value={this.state.lastname} name="lastname" placeholder="apellido" autoComplete="lastname" onChange={(e)=>this.handleInput(e)}/>
+                      <Input type="text" value={this.state.lastName} name="lastName" placeholder="apellido" autoComplete="lastName" onChange={(e) => this.handleInput(e)} />
                     </InputGroup>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <FontAwesomeIcon icon={faAt}></FontAwesomeIcon>
+                          <FontAwesomeIcon icon={faAt}></FontAwesomeIcon>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="mail" value={this.state.email} name="email" placeholder="Email" autoComplete="email" onChange={(e)=>this.handleInput(e)}/>
+                      <Input type="mail" value={this.state.email} name="email" placeholder="Email" autoComplete="email" onChange={(e) => this.handleInput(e)} />
                     </InputGroup>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                        <FontAwesomeIcon icon={faLock}></FontAwesomeIcon>
+                          <FontAwesomeIcon icon={faLock}></FontAwesomeIcon>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" value={this.state.password} name="password" placeholder="Password" autoComplete="new-password" onChange={(e)=>this.handleInput(e)}/>
+                      <Input type="password" value={this.state.password} name="password" placeholder="Password" autoComplete="new-password" onChange={(e) => this.handleInput(e)} />
                     </InputGroup>
                     <InputGroup className="mb-4">
                       <InputGroupAddon addonType="prepend">
@@ -97,9 +97,9 @@ onClick (firstName, lastName, email, password){
                           <FontAwesomeIcon icon={faLock}></FontAwesomeIcon>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" value={this.state.check} name="check" placeholder="repetir password" autoComplete="new-password" onChange={(e)=>this.handleInput(e)}/>
+                      <Input type="password" value={this.state.check} name="check" placeholder="repetir password" autoComplete="new-password" onChange={(e) => this.handleInput(e)} />
                     </InputGroup>
-                    <Button  onClick={(()=>this.onClick( this.state.firstname, this.state.lastName, this.state.email, this.state.password))} className="btn btn-success">Create Account</Button>
+                    <Button onClick={((firstName, lastName, email, password) => this.onClick(this.state.firstName, this.state.lastName, this.state.email, this.state.password))} className="btn btn-success">Create Account</Button>
                   </Form>
                 </CardBody>
                 <CardFooter className="p-4">

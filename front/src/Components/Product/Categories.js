@@ -1,11 +1,10 @@
 import React,{useEffect, useState} from 'react';
-import {  useParams } from "react-router-dom";
-import ReactDOM from 'react-dom'
+import {  useParams, Link } from "react-router-dom";
+
 
 export default function Categories() {
 const [Items, setItems] = useState({
-    products:[],
-    id:""
+    products:[]
 })
   
 let id = useParams().id;
@@ -15,10 +14,9 @@ console.log(id)
         .then(data => {
             console.log(data)
             setItems({
-                ...Items,
                 products: data
             })
-        })
+        },[])
     
 
     return (
@@ -36,7 +34,7 @@ console.log(id)
                                         <p class="card-text text-center">{element.descripcion}</p>
                                         <p class="card-text text-center"><small class="text-muted">${element.precioMenor}</small></p>
                                         <div className="text-center">
-                                            {/* <Link to={`/productPage/${element._id}`} name="articulos" type="button" class="btn btn-warning">Agregar al carrito</Link> */}
+                                           <Link to={`/productPage/${element._id}`} name="articulos" type="button" class="btn btn-warning">Agregar al carrito</Link> 
                                         </div>
                                     </div>
                                 </div>
