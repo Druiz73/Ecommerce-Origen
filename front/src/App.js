@@ -17,9 +17,6 @@ import Register from './Components/User/Register/Register';
 import Login from './Components/User/Login/Login';
 import Profile from './Components/User/Profile/Profile';
 
-
-
-
 function App() {
   const [Items, setItems] = useState({
     product: [],
@@ -37,17 +34,28 @@ function App() {
       })
   }, [])
 
+  function getById(id) {
+    fetch("http://localhost:4000/products/" + id)
+      .then(resp => resp.json())
+      .then(data => {
+        setItems({
+          ...Items,
+          product: data
+        })
+      })
+  }
+
   return (
     <Router>
-      <Header categories={Items.categories} />
+      <Header categories={Items.categories} getById={(id) => getById(id)} />
       <Switch>
         <Route path="/categories/:id" >
-          <Categories />
+          <Categories products={Items.product} />
         </Route>
-        <Route path="/login" component={Login}/>
-        <Route path="/register" component={Register}/>
-        <Route path="/profile" component={Profile}/>
-        <Route path="/productPage" component={ProductPage}/>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/productPage" component={ProductPage} />
         <Route path="/admin" >
           <Admin />
         </Route>

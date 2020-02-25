@@ -1,31 +1,14 @@
-import React,{useEffect, useState} from 'react';
-import {  useParams, Link } from "react-router-dom";
+import React from 'react';
+import {   Link } from "react-router-dom";
 
-export default function Categories() {
-const [Items, setItems] = useState({
-    products:[],
-    id:""
-})
-  
-let id = useParams().id;
-
-    fetch("http://localhost:4000/products/"+id)
-    .then(resp => resp.json())
-    .then(data => {
-        console.log(data)
-        setItems({
-            ...Items,
-            products: data
-        })
-    })
-
+export default function Categories(props) {
 
     return (
         <div className="col-12">
         <div className="container-fluid section">
             <div data-spy="scroll" data-target="#navbar-example3" className="mb-3 col-12 col-md-6 col-lg-12" data-offset="0">
                 <div className="row">
-                    {Items.products.map((element) => (
+                    {props.products.map((element) => (
                         <div className="card m-1 mb-3 col-12 col-lg-3 item-border cards" id={element.category}>
                             <div className="row no-gutters">
                                 <img className="img-fluid" src={element.imageUrl['0'].base64} />

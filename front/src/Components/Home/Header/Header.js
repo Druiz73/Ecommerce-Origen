@@ -52,13 +52,9 @@ export default function Header(props) {
             });
     }
 
-
-
     const toggle = () => setstate(!state.isOpen);
 
-
     return (
-
         <div className="border-bottom border-dark h-5">
             <div className="container-fluid ">
                 <div className="row">
@@ -85,15 +81,15 @@ export default function Header(props) {
                         </div>
                         <div className="col-6">
                             <NavbarToggler onClick={toggle} />
-                            <NavbarCat categories={props.categories} />
+                            <NavbarCat categories={props.categories} getById={(id) => props.getById(id)} />
                         </div>
                         <div className="col-3">
-                        <Form className="collapse navbar-collapse ml-3">
-                            <Input class="w-50 form-control" name="search" value={state.search} type="search" placeholder="Search" aria-label="Search" onChange={(e) => handleInput(e)} />
-                            <Button class="btn btn-outline-success" onClick={(e) => handleClick(e)} type="submit">Search</Button>
-                        </Form>
+                            <Form className="collapse navbar-collapse ml-3">
+                                <Input class="w-50 form-control" name="search" value={state.search} type="search" placeholder="Search" aria-label="Search" onChange={(e) => handleInput(e)} />
+                                <Button class="btn btn-outline-success" onClick={(e) => handleClick(e)} type="submit">Search</Button>
+                            </Form>
                         </div>
-                       
+
                         <Nav>
                             <Link className="col-1">
                                 <img src={carrito} />
