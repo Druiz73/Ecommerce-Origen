@@ -6,12 +6,11 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 export default function ProductPage(props) {
-    const productsXMayor = JSON.parse(localStorage.getItem('mayorista')) || [];
-    const productsxMenor = JSON.parse(localStorage.getItem('mayorista')) || [];
+    const productXMayor = JSON.parse(localStorage.getItem("mayorista")) || [];
+    const productXMenor = JSON.parse(localStorage.getItem("minorista")) || [];
     const [product, setProduct] = useState({});
     const [image, setImage] = useState('');
     const [quantity, setQuantity] = useState(1);
-    const [typeSale, settypeSale] = useState(props.typeSale);
     const [redirectCarrito, setRedirectCarrito] = useState(false);
 
 
@@ -30,30 +29,29 @@ export default function ProductPage(props) {
 
 
     function handleButton() {
-        if (typeSale.sale === "minorista") {
+        if (props.typeSale.sale === "mayorista") {
             if (quantity >= 1) {
-                productsXMayor.push({ ...product, quantity, })
+                productXMayor.push({ ...product, quantity, })
                 let typeSale = props.typeSale.sale;
-                console.log(typeSale)
-                localStorage.setItem(typeSale, JSON.stringify( productsXMayor))
-                setProduct({  productsXMayor: product, typeSale: props.typeSale })
-                props.setear( productsXMayor.length);
+                localStorage.setItem(typeSale, JSON.stringify( productXMayor))
+                setProduct({ productXMayor: product, typeSale: props.typeSale })
+                props.setear( productXMayor.length, productXMenor.length);
                 setRedirectCarrito(true);
             } else {
-                window.confirm("INGRESE quantity CORRECTA");
+                window.confirm("INGRESE CANTIDAD CORRECTA");
             }
         }
-        else if (typeSale.sale === "mayorista") {
+        else if (props.typeSale.sale === "minorista") {
             if (quantity >= 1) {
-                productsxMenor.push({ ...product, quantity, })
+                productXMenor.push({ ...product, quantity, })
                 let typeSale = props.typeSale.sale;
-                console.log(typeSale)
-                localStorage.setItem(typeSale, JSON.stringify(productsxMenor))
-                setProduct({ productsxMenor: product, typeSale: props.typeSale })
-                props.setear(productsxMenor.length);
+                localStorage.setItem(typeSale, JSON.stringify(productXMenor))
+                setProduct({ productXMenor: product, typeSale: props.typeSale })
+                props.setear(productXMayor.length, productXMenor.length)
                 setRedirectCarrito(true);
+             
             } else {
-                window.confirm("INGRESE quantity CORRECTA");
+                window.confirm("INGRESE CANTIDAD CORRECTA");
             }
         }
 
@@ -98,13 +96,13 @@ export default function ProductPage(props) {
                                 <p>Talles</p>
 
 
-                                {talles()}
+                                {/* {talles()} */}
 
 
 
                                 <hr></hr>
                                 <label className="mr-2">quantity: </label>
-                                <input className="col-2" name="quantity" type="number" value={quantity} onChange={(e) => cambiarCant(e)} />
+                                <input className="col-2" name="quantity" type="number" defaultValue="1" value={quantity} onChange={(e) => cambiarCant(e)} />
                                 <hr></hr>
                                 <div className="text-center">
                                     <button className="btn btn-warning mx-auto mb-5" onClick={() => handleButton()}>Comprar</button>

@@ -8,20 +8,21 @@ export default function Carrito(props) {
     const [artMEnor, setArtMEnor] = useState(props.productXMenor);
     const [activeTab, setActiveTab] = useState("1")
 
+
     function deleteArtMayor(index) {
         let art2 = artMayor.slice();
         art2.splice(index, 1);
         setArtMayor(art2);
-        localStorage.setItem('mayorista', JSON.stringify(art2));
-        props.setear(art2.length)
+        localStorage.setItem('mayorista', JSON.stringify(art2)) ;
+        props.setear(art2.length, props.productXMenor.length)
     }
 
     function deleteArtMenor(index) {
         let art2 = artMEnor.slice();
         art2.splice(index, 1);
         setArtMEnor(art2);
-        localStorage.setItem('minorista', JSON.stringify(art2));
-        props.setear(art2.length)
+        localStorage.setItem('minorista', JSON.stringify(art2)) ;
+        props.setear(props.productXMayor.length, art2.length)
     }
 
     const toggle = (tab) => {
@@ -112,7 +113,7 @@ export default function Carrito(props) {
                                     <p className="text-center">$ {item.precio * item.cantidad}</p>
                                 </div>
                                 <div className="col-1 col-lg-1 mt-1 align-self-center">
-                                    <button className="btn btn-danger" onClick={() => deleteArtMayor(index)}>Eliminar</button>
+                                    <button className="btn btn-danger" onClick={() => deleteArtMenor(index)}>Eliminar</button>
                                 </div>
                             </div>
                         ))}
@@ -157,7 +158,7 @@ export default function Carrito(props) {
                                     <p className="text-center">$ {item.precio * item.quantity}</p>
                                 </div>
                                 <div className="col-1 col-lg-1 mt-1 align-self-center">
-                                    <button className="btn btn-danger" onClick={() => deleteArtMenor(index)}>Eliminar</button>
+                                    <button className="btn btn-danger" onClick={() => deleteArtMayor(index)}>Eliminar</button>
                                 </div>
                             </div>
                         ))}
