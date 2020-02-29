@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams
+    Link
 } from "react-router-dom";
 import {
     Button,
@@ -19,14 +16,20 @@ import NavbarCat from './NavbarCat';
 import './header.css';
 import logo from '../../imgs/Jokker 2.png';
 
+
 export default function Header(props) {
 
 
     const [state, setstate] = useState({
         isOpen: false,
         search: "",
-        product: []
+        product: [],
+        log: false,
+        nombre: ""
     });
+
+
+
 
 
 
@@ -37,8 +40,8 @@ export default function Header(props) {
             ...state,
             [name]: value
         });
-        console.log(state)
     }
+
     const query = `?=${state.search}`;
 
     function handleClick(e) {
@@ -51,6 +54,9 @@ export default function Header(props) {
                 })
             });
     }
+    const logOut = (()=>{
+        localStorage.clear("usertoken")
+    })
 
     const toggle = () => setstate(!state.isOpen);
 
@@ -60,12 +66,15 @@ export default function Header(props) {
                 <div className="row">
                     <div className="col-12 bg-dark h-5 d-flex justify-content-between">
                         <div className="col-3 text-white d-flex bd-highlight">
-                            <Link to="/register" className="text-white flex-fill bd-highlight my-auto">Crear Cuenta</Link>
+                        {props.log.log ?  <a href="/" onClick={()=>logOut()} className="text-white flex-fill bd-highlight my-auto">Cerrar sesion</a> :
+                            <Link to="/register" className="text-white flex-fill bd-highlight my-auto">Crear Cuenta</Link> }
                         </div>
                         <div className="col-10 col-md-6 col-lg-4 pr-0 d-flex bd-highlight mr-lg-5">
-                            <Link to="/login" className="text-white text-center mx-sm-auto  mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Iniciar Sesión </Link>
-                            <Link to="/" className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Mayorista </Link>
-                            <Link to="/" className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight">Minorista</Link>
+                            {props.log.log ? <h5 className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Bienvenido {props.log.firstName.toUpperCase()} {props.log.lastName.toUpperCase()} </h5> :
+                                <Link to="/login" className="text-white text-center mx-sm-auto  mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Iniciar Sesión </Link>
+                            }
+                            <Link onClick={(valor) => props.getTipoVenta("mayorista")} className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Mayorista </Link>
+                            <Link onClick={(valor) => props.getTipoVenta("minorista")} className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight">Minorista</Link>
                         </div>
                     </div>
                 </div>
@@ -91,7 +100,8 @@ export default function Header(props) {
                         </div>
 
                         <Nav>
-                            <Link className="col-1">
+                            <Link to='/cart' className="col-1">
+                                <span class="badge badge-danger rounded-circle">{props.cartLength}</span>
                                 <img src={carrito} />
                             </Link>
                         </Nav>

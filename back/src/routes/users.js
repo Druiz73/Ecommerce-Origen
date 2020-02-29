@@ -54,10 +54,12 @@ router.post('/register', function (req, res, next) {
 })
 
 router.post('/login', function (req, res, next) {
+    console.log(req.body.email)
     users.findOne({
         email: req.body.email
     })
         .then(user => {
+            console.log(user)
             if (user) {
                 if (bcrypt.compareSync(req.body.password, user.password)) {
                     const payload = {
@@ -69,7 +71,7 @@ router.post('/login', function (req, res, next) {
                     let token = jwt.sign(payload, process.env.SECRET_KEY, {
                         expiresIn: 1440
                     })
-                    res.send(token)
+                    res.send({ token: token });
                 }
                 else {
                     res.json({ error: 'user does not exist' })
@@ -79,8 +81,8 @@ router.post('/login', function (req, res, next) {
                 res.json({ error: 'user does not exist' })
             }
         })
-        .catch(err => {
-            res.send('error: ' + err)
+        .catch(error => {
+            res.send('error: ' + error)
         })
 })
 

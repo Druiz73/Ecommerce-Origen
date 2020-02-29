@@ -47,10 +47,9 @@ export default function FormEdit(props) {
         let index
         // check if the check box is checked or unchecked
         if (e.target.checked) {
-            console.log("hola")
+          
             // add the numerical value of the checkbox to options array
             product.talles.push(e.target.value)
-            console.log(product.talles)
         } else {
             // or remove the value from the unchecked checkbox from the array
             index = product.talles.indexOf(e.target.value)

@@ -10,6 +10,7 @@ import ordersRouter from './routes/orders';
 import productsRouter from './routes/products';
 import usersRouter from './routes/users';
 import registerRouter from './routes/register';
+import saleRouter from './routes/Sales';
 
 
 
@@ -37,6 +38,7 @@ app.use('/categories', categoriesRouter);
 app.use('/cartItems', cartItemsRouter);
 app.use('/user', usersRouter);
 app.use('/register', registerRouter);
+app.use('/sales', saleRouter);
 // app.use('/orders', ordersRouter);
 // app.use('/products', productsRouter);
 

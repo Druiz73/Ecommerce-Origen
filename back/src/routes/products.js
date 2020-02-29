@@ -10,7 +10,6 @@ var router = express.Router();
 
 router.get('/:id', (req, res, next) => {
     let productIds = req.params.id;
-   console.log(productIds)
     products.find({
             'category': {
                 $in: productIds
@@ -22,17 +21,16 @@ router.get('/:id', (req, res, next) => {
         })
 })
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    products.find((error, data) => {
-        if (error) {
-            res.send(error);
-        } else {
-            res.send(data);
 
-        }
+router.get('/cart/:id', function (req, res, next) {
+    products.findById({
+        _id: req.params.id
+    }, function (err, producto) {
+        if (err) throw err;
+        res.send(producto)
     });
 });
+
 
 
 router.get('/', function (req, res, next) {

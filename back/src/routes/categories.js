@@ -20,6 +20,15 @@ router.get('/', function (req, res, next) {
     })
 });
 
+router.get('/:id', function (req, res, next) {
+    category.findOne({
+        _id: req.params.id
+    }, function (err, category) {
+        if (err) throw err;
+        res.send(category)
+    });
+});
+
 router.post('/create', function (req, res, next) {
     const {
         nombre

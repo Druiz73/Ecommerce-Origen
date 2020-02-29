@@ -61,7 +61,6 @@ export default function Create(props) {
             ...product,
             category: e.target.value
         })
-        console.log(product.category)
     })
 
 
@@ -112,7 +111,7 @@ export default function Create(props) {
             .then(data => {
                 props.getProducts();
                 limpiar();
-               
+                deseleccionar_todo();
             })
     };
     let imageurl = document.getElementById("image");
@@ -131,10 +130,16 @@ export default function Create(props) {
         })
     })
 
+    function deseleccionar_todo(){
+        for (let i=0;i<document.f1.elements.length;i++)
+           if(document.f1.elements[i].type == "checkbox")
+              document.f1.elements[i].checked=0
+     }
+
 
 
     return (
-        <Form className="col-8 mx-auto text-center" >
+        <Form className="col-8 mx-auto text-center" name="f1" >
             <h2>Crear Producto</h2>
             <FormGroup>
                 <Label for="titulo">Producto</Label>
