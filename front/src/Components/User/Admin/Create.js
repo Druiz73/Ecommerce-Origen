@@ -24,16 +24,12 @@ export default function Create(props) {
         for (var i = 0; i < files.length; i++) {
 
             let file = files[i];
-
             // Make new FileReader
             let reader = new FileReader();
-
             // Convert the file to base64 text
             reader.readAsDataURL(file);
-
             // on reader load somthing...
             reader.onload = () => {
-
                 // Make a fileInfo Object
                 let fileInfo = {
                     //   name: file.name,
@@ -42,7 +38,6 @@ export default function Create(props) {
                     base64: reader.result
                     //   file: file,
                 };
-
                 // Push it to the state
                 allFiles.push(fileInfo);
 
@@ -90,29 +85,33 @@ export default function Create(props) {
     }
 
     function save(titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) {
-
-        fetch("http://localhost:4000/products/create", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                titulo: titulo,
-                precioMayor: precioMayor,
-                precioMenor: precioMenor,
-                stock: stock,
-                descripcion: descripcion,
-                talles: talles,
-                category: category,
-                imageUrl: imageUrl
+        if(titulo!=="" && precioMayor!=="" && precioMenor !=="" && stock !=="" && descripcion!=="" && talles !=="" && category !=="" && imageUrl!=="" )
+        {
+            fetch("http://localhost:4000/products/create", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    titulo: titulo,
+                    precioMayor: precioMayor,
+                    precioMenor: precioMenor,
+                    stock: stock,
+                    descripcion: descripcion,
+                    talles: talles,
+                    category: category,
+                    imageUrl: imageUrl
+                })
             })
-        })
-            .then(resp => resp.json())
-            .then(data => {
-                props.getProducts();
-                limpiar();
-                deseleccionar_todo();
-            })
+                .then(resp => resp.json())
+                .then(data => {
+                    props.getProducts();
+                    limpiar();
+                    deseleccionar_todo();
+                })
+        }
+        else{alert("todos los campos son requeridos")}
+       
     };
     let imageurl = document.getElementById("image");
     const limpiar = ((e) => {

@@ -59,6 +59,7 @@ router.post('/', function (req, res, next) {
         }
     })
 })
+
 router.delete('/', function (req, res, next) {
     Sale.deleteOne({
         _id: req.body.id

@@ -3,9 +3,43 @@ import { Button, Form, FormGroup, Label, Input, Checkbox, Table } from 'reactstr
 
 export default function Category(props) {
     const [category, setcategory] = useState({
-        nombre: ""
+        nombre: "",
+        image: ""
     });
-    
+
+    const handleChange = (e) => {
+
+        // get the files
+        let files = e.target.files;
+
+        // Process each file
+        var allFiles = [];
+        for (var i = 0; i < files.length; i++) {
+
+            let file = files[i];
+            // Make new FileReader
+            let reader = new FileReader();
+            // Convert the file to base64 text
+            reader.readAsDataURL(file);
+            // on reader load somthing...
+            reader.onload = () => {
+                // Make a fileInfo Object
+                let fileInfo =  { base64: reader.result} 
+                    //   name: file.name,
+                    //   type: file.type,
+                    //   size: Math.round(file.size / 1000) + ' kB',
+                    
+                    //   file: file,
+                // Push it to the state
+                allFiles.push(fileInfo);
+               
+            } // for
+           
+            setcategory({ ...category, image: allFiles })
+        }
+    }
+
+    console.log(category.image)
     return (
         <div className="container">
             <div className="row mt-5">
@@ -15,8 +49,13 @@ export default function Category(props) {
                         <Label for="categoria">Nombre</Label>
                         <Input type="text" id="category" name="nombre" value={props.nombre} placeholder="nombre categoria" onChange={(e) => props.handleInput(e)} />
                     </FormGroup>
+                    <FormGroup>
+                        <Label for="file">Subir imagen de producto:</Label>
+                        <Input className="text-center mx-auto" id="imageCat" type="file" accept="image/*" name="imageUrl" onChange={(e) => handleChange(e)} />
+
+                    </FormGroup>
                     <FormGroup >
-                        <Button  onClick={() => props.saveCategory(props.nombre)}>Crear</Button>
+                        <Button onClick={() => props.saveCategory(props.nombre, category.image)}>Crear</Button>
                     </FormGroup>
                 </Form>
                 <div className="col-12 col-lg-6">

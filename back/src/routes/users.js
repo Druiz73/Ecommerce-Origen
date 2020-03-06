@@ -133,6 +133,9 @@ router.delete('/delete/:id', function (req, res, next) {
 
 
 
+
+
+
 // router.get('/pagination', function (req, res, next) {
 //     Investment.find((error, data) => {
 //         let cant = 3;

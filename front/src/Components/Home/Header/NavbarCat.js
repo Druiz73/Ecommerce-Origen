@@ -12,9 +12,7 @@ import { Link } from "react-router-dom";
 export default function NavbarCat(props) {
     const [Items, setItems] = useState({
         isOpen: false,
-        search: "",
-        product: [],
-        categories: []
+        search: ""
     });
 
     function letId(id) {
@@ -23,7 +21,7 @@ export default function NavbarCat(props) {
 
     return (
         <Collapse isOpen={Items.isOpen} navbar>
-            <Nav className="d-flex justify-content-between mx-auto h-5" navbar>
+            <Nav className="col-12 d-flex justify-content-between mx-auto h-5" navbar>
                 {props.categories.map((element) => (
                     <NavItem>
                         <Link to={letId(element._id)}> <NavLink className="cat text-dark" onClick={(id) => props.getById(element._id)} > {element.nombre}</NavLink></Link>
