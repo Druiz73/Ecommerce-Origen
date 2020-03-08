@@ -9,6 +9,8 @@ mongoose.connect('mongodb://localhost:27017/jokkerDB', {
 
 var router = express.Router();
 
+
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
     category.find((error, data) => {
@@ -19,13 +21,31 @@ router.get('/', function (req, res, next) {
         }
     })
 });
+router.get('/home', function (req, res, count) {
+    var q = category.find().limit(4);
+    q.exec(function (err, data) {
+        res.send(data)
+    });
+});
+
+router.get('/:id', function (req, res, next) {
+    category.findOne({
+        _id: req.params.id
+    }, function (err, category) {
+        if (err) throw err;
+        res.send(category)
+    });
+});
 
 router.post('/create', function (req, res, next) {
+
     const {
-        nombre
+        nombre,
+        image
     } = req.body;
     const nuevo = new category({
         nombre: nombre,
+        image: image
     });
     nuevo.save((error, item) => {
         if (error) {
@@ -42,7 +62,7 @@ router.put('/edit/:id', function (req, res, next) {
     }, {
         nombre: req.body.nombre,
     }, (err, data) => {
-        if(err){
+        if (err) {
             res.send(err)
         } else {
             res.send(data)
@@ -62,6 +82,8 @@ router.delete('/delete/:id', function (req, res, next) {
         }
     });
 });
+
+
 
 
 

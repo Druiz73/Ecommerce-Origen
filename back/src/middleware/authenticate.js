@@ -1,21 +1,25 @@
-import jwt from ('jsonwebtoken');
+import config from "./config";
+import jwt, { verify } from "jsonwebtoken";
 
-const authenticate = (req, res, next) => {
-
-    try{
-
-         //Extract Authorization Token
-        const token = req.headers["auth-token"];
-        const decoded = jwt.verify(token, 'mysecretkey');
+function verifyToken(req, res, next) {
+  const bearerHeader = req.headers["auth"];
+  if (typeof bearerHeader !== "undefined") {
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    jwt.verify(bearerHeader, config.key, (err, decoded) => {
+      if (err) {
+        return res.json({ mensaje: "Token inválida" });
+      } else {
+        req.decoded = decoded;
         next();
-
-    }catch(error){
-        res.status(500).json({
-            error: error
-        });
-    }
-   
-
+      }
+    });
+  } else {
+    // forbidden
+    console.log("else");
+    res.json({ mensaje: "No Autorizado" });
+  }
 }
 
-module.exports = authenticate;
+export default verifyToken;

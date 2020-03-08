@@ -10,7 +10,6 @@ var router = express.Router();
 
 router.get('/:id', (req, res, next) => {
     let productIds = req.params.id;
-   console.log(productIds)
     products.find({
             'category': {
                 $in: productIds
@@ -22,17 +21,16 @@ router.get('/:id', (req, res, next) => {
         })
 })
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    products.find((error, data) => {
-        if (error) {
-            res.send(error);
-        } else {
-            res.send(data);
 
-        }
+router.get('/cart/:id', function (req, res, next) {
+    products.findById({
+        _id: req.params.id
+    }, function (err, producto) {
+        if (err) throw err;
+        res.send(producto)
     });
 });
+
 
 
 router.get('/', function (req, res, next) {
@@ -113,8 +111,7 @@ router.put('/edit/:id', function (req, res, next) {
             stock: req.body.stock,
             descripcion: req.body.descripcion,
             talles: req.body.talles,
-            category: req.body.category,
-            imageUrl: req.body.imageUrl,
+            category: req.body.category
         },
         (err, data) => {
             if (err) {
@@ -140,26 +137,5 @@ router.delete('/delete/:id', function (req, res, next) {
 });
 
 
-
-// router.get('/pagination', function (req, res, next) {
-//     Investment.find((error, data) => {
-//         let cant = 3;
-//         let desde = 0;
-//         let cantInv = data.length;
-//         let paginas = cantInv / cant;
-//         paginas = Math.ceil(paginas)
-//         console.log(cantInv)
-//         if (error) {
-//             res.send(error)
-//         } else {
-//             res.send({
-//                 results: data.slice(desde, desde + cant),
-//                 totalInv: data.length,
-//                 cantPaginas: paginas
-//             });
-
-//         }
-//     })
-// });
 
 export default router;

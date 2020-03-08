@@ -13,13 +13,24 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        const token = localStorage.usertoken
-        const decoded = jwt_decode(token)
-        this.setState({
-            firstName: decoded.firstName,
-            lastName: decoded.lastName,
-            email: decoded.email
-        })
+        const token = localStorage.usertoken;
+        fetch("http://localhost:4000/user/profile",{ headers: { Authorization: token }})
+        .then(response => {
+            console.log(response)
+            return response.data
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        
+        console.log(token)
+        // const decoded = jwt_decode(token)
+        // console.log(decoded)
+        // this.setState({
+        //     firstName: decoded.firstName,
+        //     lastName: decoded.lastName,
+        //     email: decoded.email
+        // })
     }
 
     render() {
