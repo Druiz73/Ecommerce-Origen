@@ -13,6 +13,7 @@ import registerRouter from './routes/register';
 import saleRouter from './routes/Sales';
 import adminRouter from './routes/admins';
 import suscriberRouter from './routes/suscribers';
+import mercadoPago from './routes/mercado-pago';
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use('/register', registerRouter);
 app.use('/sales', saleRouter);
 app.use('/admin', adminRouter);
 app.use('/suscriber', suscriberRouter);
+app.use('/mercado-pago', mercadoPago);
 // app.use('/orders', ordersRouter);
 // app.use('/products', productsRouter);
 

@@ -81,7 +81,9 @@ export default class Admin extends Component {
             })
                 .then(resp => resp.json())
                 .then(data => {
+                    console.log(data)
                     this.get();
+                    this.getCategory();
                 });
         }
         else {
@@ -215,7 +217,7 @@ export default class Admin extends Component {
                     <TabPane tabId="3">
                         <Row>
                             <Col sm="12">
-                                <TableProducts categories={this.state.category} products={this.state.products} delete={(id) => this.delete(id)} edit={(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) => this.edit(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl)} />
+                                <TableProducts categories={this.state.category} products={this.state.products} delete={(id) => this.delete(id)} edit={(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) => this.edit(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category)} />
                             </Col>
                         </Row>
                     </TabPane>

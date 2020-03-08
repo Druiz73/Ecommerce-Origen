@@ -43,7 +43,7 @@ export default function TableProducts(props) {
       [name]: value
     })
   }
-
+console.log(product.category)
   function checkbox(element) {
 
     for (let f = 0; f < element.length; f++) {
@@ -70,7 +70,8 @@ export default function TableProducts(props) {
       }
     }
   }
-  const handleCategoria = ((e) => {
+
+  const handleCategorie = ((e) => {
     setProduct({
         ...product,
         category: e.target.value
@@ -133,7 +134,7 @@ export default function TableProducts(props) {
                   </FormGroup>
                   <FormGroup>
                     <Label for="categoria">Categoria</Label>
-                    <Input type="select" value={product.category} onChange={(e) => handleCategoria(e)}>
+                    <Input type="select" value={product.category} onChange={(e) => handleCategorie(e)}>
                       {props.categories.map((element) => (
                         <option key={element._id} value={element._id} defaultValue={product.category} selected>{element.nombre}</option>
                       ))}

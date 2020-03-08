@@ -41,14 +41,14 @@ router.put('/:id', function (req, res, next) {
 router.post('/', function (req, res, next) {
     console.log("asdsa", req.body)
     
-    let productos = req.body.products.map((item) => ({
+    let products = req.body.products.map((item) => ({
         _id: item._id,
-        cantidad: item.cantidad,
-        unit_price: item.precio,
+        quantity: item.quantity,
+        unit_price: item.price
     }))
   
     const newSale = new Sale({
-        products: productos,
+        products: products
     });
 
     newSale.save((error, data) => {

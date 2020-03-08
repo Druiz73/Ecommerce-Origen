@@ -21,7 +21,7 @@ export default function NavbarCat(props) {
 
     return (
         <Collapse isOpen={Items.isOpen} navbar>
-            <Nav className="col-12 d-flex justify-content-between mx-auto h-5" navbar>
+            <Nav className="col-12 d-flex justify-content-around mx-auto my-2 h-5" navbar>
                 {props.categories.map((element) => (
                     <NavItem>
                         <Link to={letId(element._id)}> <NavLink className="cat text-dark" onClick={(id) => props.getById(element._id)} > {element.nombre}</NavLink></Link>

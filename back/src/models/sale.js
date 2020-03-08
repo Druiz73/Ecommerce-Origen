@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const saleSchema = mongoose.Schema({
     products: [{
-        cantidad: {
+        quantity: {
             type: String,
             required: true
         },

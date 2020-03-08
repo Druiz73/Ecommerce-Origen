@@ -111,8 +111,7 @@ router.put('/edit/:id', function (req, res, next) {
             stock: req.body.stock,
             descripcion: req.body.descripcion,
             talles: req.body.talles,
-            category: req.body.category,
-            imageUrl: req.body.imageUrl,
+            category: req.body.category
         },
         (err, data) => {
             if (err) {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Table } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Table, Button } from 'reactstrap';
 import classnames from 'classnames';
 
 export default function Carrito(props) {
@@ -38,7 +38,8 @@ export default function Carrito(props) {
     })
 
 
-    function compraxMayor() {
+    function compraxMayor(e) {
+        e.preventDefault()
 
         if (totalMayor !== 0 && totalMayor > 3500) {
             fetch(`http://localhost:4000/sales`, {
@@ -58,12 +59,74 @@ export default function Carrito(props) {
             artMayor.splice(artMayor);
             setArtMayor(artMayor);
             localStorage.setItem('mayorista', JSON.stringify(artMayor));
-            props.setear(artMayor.length)
+            props.setear(artMayor.length, props.productXMenor.length)
+
+            fetch(`http://localhost:4000/sales/mercado-pago`, {
+                method: "POST",
+                body: JSON.stringify({
+                    products: artMayor
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    return data.body.init_point
+                })
+                .then(data => {
+                    // window.location.href = data;
+                    console.log(data)
+                })
+                .catch(err => console.error(err, "error"))
         }
         else {
             alert("recuerde que la compra por mayor debe superar los 3500 pesos")
         }
+    }
 
+    function compraxMenor() {
+
+        fetch(`http://localhost:4000/sales`, {
+            method: "POST",
+            body: JSON.stringify({
+                products: artMEnor
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => console.log(data, "respuesta"))
+            .catch(err => console.error(err, "error"))
+
+        artMEnor.splice(artMEnor);
+        setArtMEnor(artMEnor);
+        localStorage.setItem('minorista', JSON.stringify(artMEnor));
+        props.setear(props.productXMayor.length, artMEnor.length)
+
+        fetch(`http://localhost:4000/sales/mercado-pago`, {
+            method: "POST",
+            body: JSON.stringify({
+                products: artMEnor
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                return data.body.init_point
+            })
+            .then(data => {
+                // window.location.href = data;
+                console.log(data)
+            })
+            .catch(err => console.error(err, "error"))
+        
     }
 
 
@@ -88,7 +151,6 @@ export default function Carrito(props) {
             <TabContent activeTab={activeTab}>
                 <TabPane tabId="1">
                     <div className="container my-5">
-
                         <h1 className="text-dark font-italic">Productos Seleccionados x Menor</h1>
                     </div>
                     <Table bordered>
@@ -121,7 +183,7 @@ export default function Carrito(props) {
                         </div>
                         <div className="row">
                             <Link to="/" className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
-                            <Link to="/compenespera" className="mx-auto my-1 btn btn-primary btn-sm border-dark" onClick={() => compraxMayor()}>Finalizar Compra</Link>
+                            <Link to="/compenespera" id="xmenor" className="mx-auto my-1 btn btn-primary btn-sm border-dark" onClick={() => compraxMenor()}>Finalizar Compra</Link>
                         </div>
                     </div>
                 </TabPane>
@@ -159,11 +221,11 @@ export default function Carrito(props) {
                             <h5 className="mr-5 my-1">Total $ {totalMayor}</h5>
                         </div>
                         <div className="row">
-                            <Link to="/" className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
-                            <Link to="/compenespera" className="mx-auto my-1 btn btn-primary btn-sm border-dark" onClick={() => compraxMayor()}>Finalizar Compra</Link>
+                            <Link className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
+                            <Button type="button" id="xmayor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => compraxMayor(e)}>Finalizar Compra</Button>
                         </div>
                     </div>
-                  
+
                 </TabPane>
 
             </TabContent>

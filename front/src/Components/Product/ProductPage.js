@@ -45,7 +45,7 @@ export default function ProductPage(props) {
 
                         }
                     }
-                    productXMayor.push({ ...product, quantity, talles: talle })
+                    productXMayor.push({ ...product, quantity, talles: talle, price: product.precioMayor })
                     let typeSale = props.typeSale.sale;
                     localStorage.setItem(typeSale, JSON.stringify(productXMayor))
                     setProduct({ productXMayor: product, typeSale: props.typeSale })
@@ -59,12 +59,10 @@ export default function ProductPage(props) {
                 if (quantity >= 1) {
                     for (let i = 0; i < document.check.elements.length; i++) {
                         if (document.check.elements[i].type == "checkbox" && document.check.elements[i].checked == "1") {
-
                             talle = document.check.elements[i].value;
-
                         }
                     }
-                    productXMenor.push({ ...product, quantity, talles: talle })
+                    productXMenor.push({ ...product, quantity, talles: talle, price: product.precioMenor })
                     let typeSale = props.typeSale.sale;
                     localStorage.setItem(typeSale, JSON.stringify(productXMenor))
                     setProduct({ productXMenor: product, typeSale: props.typeSale })
@@ -75,8 +73,6 @@ export default function ProductPage(props) {
                 }
             }
         } else { alert("No olvide elegir un talle por favor") }
-
-
     }
 
     function handleCheck(e) {
@@ -144,5 +140,4 @@ export default function ProductPage(props) {
             </div>
         )
     }
-
 }

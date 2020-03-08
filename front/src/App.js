@@ -109,7 +109,6 @@ function App() {
       })
   }
 
-
   return (
     <Router>
       <Header log={log} categories={categories.categories} getTipoVenta={(valor) => getTipoVenta(valor)} getById={(id) => getById(id)} cartLength={cartLength} />
@@ -127,7 +126,7 @@ function App() {
           <ProductPage typeSale={typeSale} setear={(mayor, menor) => setear(mayor, menor)} />
         </Route>
         <Route path="/cart">
-          <Cart setear={(mayor, menor) => setear(mayor, menor)} productXMayor={productXMayor} productXMenor={productXMenor} />
+          <Cart setear={(mayor, menor) => setear(mayor, menor)} productXMayor={productXMayor} productXMenor={productXMenor} log={log} />
         </Route>
         <Route path="/admin" >
           <Admin />
