@@ -117,7 +117,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
         <Route path="/categories/:id" >
-          <Categories typeSale={typeSale.sale} products={Items.product} nombreCat={productCat} />
+          <Categories typeSale={typeSale.sale}  products={Items.product} nombreCat={productCat} />
         </Route>
         <Route path="/login"  >
           <Login getLogin={(local) => getLogin(local)} />
@@ -132,7 +132,7 @@ function App() {
           <Admin />
         </Route>
         <Route path="/" >
-          <Body categoriesHome={Items.home} />
+          <Body categoriesHome={Items.home} getById={(id) => getById(id)}/>
         </Route>
         <Route path="*" component={Page404} />
       </Switch>

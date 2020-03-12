@@ -39,7 +39,6 @@ export default function Category(props) {
         }
     }
 
-    console.log(category.image)
     return (
         <div className="container">
             <div className="row mt-5">

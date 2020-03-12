@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
 
 const saleSchema = mongoose.Schema({
+    orderDate: { type: Date, default: Date.now() },
     products: [{
+        title: {
+            type: String,
+            required: true
+        },
         quantity: {
             type: String,
             required: true

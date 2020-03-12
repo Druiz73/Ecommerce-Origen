@@ -8,7 +8,7 @@ export default function Carrito(props) {
     const [artMEnor, setArtMEnor] = useState(props.productXMenor);
     const [activeTab, setActiveTab] = useState("1")
 
-
+    //Delete article of list sale of MAyor
     function deleteArtMayor(index) {
         let art2 = artMayor.slice();
         art2.splice(index, 1);
@@ -17,6 +17,7 @@ export default function Carrito(props) {
         props.setear(art2.length, props.productXMenor.length)
     }
 
+    //Delete article of list sale of menor
     function deleteArtMenor(index) {
         let art2 = artMEnor.slice();
         art2.splice(index, 1);
@@ -25,9 +26,12 @@ export default function Carrito(props) {
         props.setear(props.productXMayor.length, art2.length)
     }
 
+    //Manage tabs
     const toggle = (tab) => {
         if (activeTab !== tab) setActiveTab(tab)
     }
+
+    //price total in list
     var totalMayor = 0;
     var totalMenor = 0;
     artMayor.forEach(item => {
@@ -37,10 +41,9 @@ export default function Carrito(props) {
         totalMenor += item.quantity * item.precioMenor
     })
 
-
-    function compraxMayor(e) {
+    //Sale of price for mayor
+    function wholesale(e) {
         e.preventDefault()
-
         if (totalMayor !== 0 && totalMayor > 3500) {
             fetch(`http://localhost:4000/sales`, {
                 method: "POST",
@@ -86,7 +89,8 @@ export default function Carrito(props) {
         }
     }
 
-    function compraxMenor() {
+    //SAle of minority price
+    function retailSale() {
 
         fetch(`http://localhost:4000/sales`, {
             method: "POST",
@@ -126,7 +130,7 @@ export default function Carrito(props) {
                 console.log(data)
             })
             .catch(err => console.error(err, "error"))
-        
+
     }
 
 
@@ -183,7 +187,7 @@ export default function Carrito(props) {
                         </div>
                         <div className="row">
                             <Link to="/" className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
-                            <Link to="/compenespera" id="xmenor" className="mx-auto my-1 btn btn-primary btn-sm border-dark" onClick={() => compraxMenor()}>Finalizar Compra</Link>
+                            <Link to="/compenespera" id="xmenor" className="mx-auto my-1 btn btn-primary btn-sm border-dark" onClick={() => retailSale()}>Finalizar Compra</Link>
                         </div>
                     </div>
                 </TabPane>
@@ -222,7 +226,7 @@ export default function Carrito(props) {
                         </div>
                         <div className="row">
                             <Link className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
-                            <Button type="button" id="xmayor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => compraxMayor(e)}>Finalizar Compra</Button>
+                            <Button type="button" id="xmayor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => wholesale(e)}>Finalizar Compra</Button>
                         </div>
                     </div>
 

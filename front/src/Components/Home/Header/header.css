@@ -2,7 +2,13 @@
     height: min-content;
 }
 
+.letters{
+    font-size: 3vw;
+}
 
+.letters:hover {
+    color:rgba(255, 217, 0, 0.877);
+  }
 .cat:hover {
     color:rgba(255, 217, 0, 0.877);
   }

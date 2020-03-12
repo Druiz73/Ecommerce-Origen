@@ -3,14 +3,6 @@ import {
     BrowserRouter as Router,
     Link
 } from "react-router-dom";
-import {
-    Button,
-    Form,
-    Input,
-    Navbar,
-    NavbarToggler,
-    Nav
-} from 'reactstrap';
 import carrito from '../../imgs/shopping-cart-symbol-for-e-commerce_icon-icons.com_56124.png';
 import NavbarCat from './NavbarCat';
 import './header.css';
@@ -34,7 +26,6 @@ export default function Header(props) {
     const toggle = () => setstate(!state.isOpen);
     return (
         <div className="container-fluid border-bottom border-dark h-5">
-
             <div className="row">
                 <div className="col-12 bg-dark h-5 d-flex justify-content-between">
                     <div className="col-3 text-white d-flex bd-highlight">
@@ -49,16 +40,17 @@ export default function Header(props) {
                         <Link onClick={(valor) => props.getTipoVenta("minorista")} className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight">Minorista</Link>
                     </div>
                 </div>
-                <nav class="navbar-expand navbar-light bg-light col-lg-12 d-flex">
-                    <a class="navbar-brand" className="col-2" href="#">
-                        <Link to="/"><img className="img-fluid " src={logo} width="120" height="120" alt="" /> </Link>
-                    </a>
-                    <div className="col-6 col-lg-8"  >
+                <nav class="navbar-expand navbar-light bg-light col-12 d-flex ">
+                    <Link  className="col-sm-3 col-lg-2 my-auto text-center" to="/">
+                       <img className="img-fluid" src={logo} width="120" height="120" alt="" />
+                       <p className="letters text-warning">Inicio</p> 
+                    </Link>
+                    <div className="letters col-sm-6 col-lg-8 my-auto justify-content-sm-start justify-content-lg-around"  >
                         <NavbarCat categories={props.categories} getById={(id) => props.getById(id)} />
                     </div>
-                    <Link to='/cart' className="col-2 text-center my-2">
-                        <img src={carrito} />
-                        <span class="badge badge-danger rounded-circle">{props.cartLength}</span>
+                    <Link to='/cart' className="col-lg-2 col-sm-3 text-center my-2  my-lg-auto">
+                        <img className="img-fluid" src={carrito} />
+                        <span class="badge badge-danger rounded-circle img-fluid">{props.cartLength}</span>
                     </Link>
                 </nav>
             </div>

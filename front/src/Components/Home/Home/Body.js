@@ -85,7 +85,7 @@ export default function Body(props) {
                     {
                         props.categoriesHome.map((element) => (
                             <div className="col-6 ">
-                                <Link to={letId(element._id)} > <img className="img-fluid my-3" src={element.image['0'].base64} /></Link>
+                                <Link to={letId(element._id)} onClick={(id)=>props.getById(element._id)}> <img className="img-fluid my-3" src={element.image['0'].base64} /></Link>
                             </div>
                         ))
                     }
@@ -120,18 +120,18 @@ export default function Body(props) {
             <div className="container mx-auto mt-4 text-center">
                 <img src={verTodos} className="img-fluid " />
             </div>
-            <div className="container-fluid my-4 h-5">
-                <div className="row bg-warning descuentos">
-                    <div className="col-12 col-sm-6 col-lg-6 d-flex justify-content-center">
+            <div className="container-fluid my-4 ">
+                <div className="row bg-warning descuentos h-auto">
+                    <div className="col-12 col-sm-7 col-lg-6 d-flex justify-content-center">
                         <h5 className="my-auto mx-auto text-dark"><strong><h2>SUSCRIBITE, ENTERATE DE LAS NOVEDADES <br />Y OBTENÉ 10% DE DESCUENTO</h2></strong></h5>
                     </div>
-                    <div className="col-12 col-sm-6 col-lg-6  d-flex justify-content-center">
-                        <input className="h-35 w-50 my-auto" onChange={(e) => handleSubscription(e)} id="suscribe" type="email" name="email" value={suscribe.email} placeholder="Ingresa tu email" />
+                    <div className="col-12 col-sm-5 col-lg-6  d-flex justify-content-center">
+                        <input className="h-35 w-75 w-sm-100 my-auto" onChange={(e) => handleSubscription(e)} id="suscribe" type="email" name="email" value={suscribe.email} placeholder="Ingresa tu email" />
                         <button type="button" onClick={() => saveSuscriber(suscribe.email)} class="btn btn-dark btn-large h-35 my-auto ml-1"><i class="fa fa-arrow-right "></i></button>
                     </div>
                 </div>
             </div>
-            <div className="container">
+            <div className="container-fluid">
                 <div className="row">
                     <div className="col-12 col-sm-12 col-lg-4 my-5">
 
@@ -140,7 +140,7 @@ export default function Body(props) {
                         <h4 className="bg-white text-center">Para compras superiores a $2000</h4>
 
                     </div>
-                    <div className="col-12 col-sm-12 col-lg-4 my-5">
+                    <div className="col-12 col-sm-12 col-lg-4 my-5 mx-0">
 
                         <div className="bg-white text-center"> <img src={pagos} className="img-fluid " /></div>
                         <h3 className="bg-white text-center mt-3">HASTA 3 CUOTAS SIN INTERES</h3>

@@ -43,6 +43,7 @@ router.post('/', function (req, res, next) {
     
     let products = req.body.products.map((item) => ({
         _id: item._id,
+        title:item.titulo,
         quantity: item.quantity,
         unit_price: item.price
     }))
