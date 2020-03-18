@@ -23,7 +23,6 @@ export default function VentasAdmin() {
         fetch(`http://localhost:4000/sales`)
             .then(resp => resp.json())
             .then(data => {
-                console.log(data)
                 setVentas({
                     sales: data
                 })
@@ -35,10 +34,29 @@ export default function VentasAdmin() {
             codigo: element._id,
             date: element.orderDate,
             status: element.status,
-            products: element.products,
+            products: element.products
         })
+        totalSale(element.products)
     }
-    console.log(ventas.sales)
+
+    function totalSale(products) {
+        let file = document.getElementById("totalSale");
+        let array = [];
+        let object = 0;
+        let element = 0;
+        file.innerHTML = "";
+        products.forEach(element => {
+            object = element.unit_price * element.quantity;
+            array.push(object);
+        });
+        for (let index = 0; index < array.length; index++) {
+            element = array[index] + element;
+        }
+
+        file.innerHTML += `Venta Total: ${(element.toString())}`;
+    }
+
+
 
     return (
         <body>
@@ -60,7 +78,7 @@ export default function VentasAdmin() {
                             </thead>
                             {ventas.sales.map((element) => (
                                 <tbody id="tBody">
-                                    <td>{moment(element.orderDate).calendar()}</td>
+                                    <td>{moment(element.orderDate).format('LLLL')}</td>
                                     <td className="text-center"> <Button type="button" onClick={() => saleToShow(element)} className="btn btn-primary" data-toggle="modal" data-target="#details" > Ver </Button></td>
                                 </tbody>
                             ))}
@@ -77,14 +95,15 @@ export default function VentasAdmin() {
                                     <form>
                                         <div className="modal-body">
                                             <ul>
-                                                <li>Fecha: {moment(details.date).format('MMMM Do YYYY, h:mm a')}</li>
+                                                <li>Fecha: {moment(details.date).format('LLLL')}</li>
                                                 <li>Estado: {details.status}</li>
                                                 <Table>
                                                     <thead className="mt-3">
                                                         <tr>
-                                                            <th scope="col-4">Titulo</th>
-                                                            <th scope="col-4">cantidad</th>
-                                                            <th scope="col-4">Precio </th>
+                                                            <th scope="col-3">Titulo</th>
+                                                            <th scope="col-3">cantidad</th>
+                                                            <th scope="col-3">Precio </th>
+                                                            <th scope="col-3 ">Total </th>
                                                         </tr>
                                                     </thead>
                                                     {details.products.map((item) => (
@@ -92,10 +111,13 @@ export default function VentasAdmin() {
                                                             <td>{item.title}</td>
                                                             <td>{item.quantity}</td>
                                                             <td>{item.unit_price}</td>
+                                                            <td >{item.unit_price * item.quantity}</td>
                                                         </tbody>
                                                     ))}
                                                 </Table>
+                                                <li id="totalSale"> </li>
                                             </ul>
+
                                         </div>
                                     </form>
 

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import React from 'react';
 import mediosDePago from '../../imgs/mediosDePago.png';
 import './footer.css'
 
@@ -19,7 +18,7 @@ export default function Footer(props) {
                 </div>
                 <div className="medios col-12  col-lg-4 mt-1 ">
                     <h2 className="text-white mt-3 text-center mb-4 " >Medios de Pago</h2>
-                    <img src={mediosDePago} className="my-auto img-fluid" />
+                    <img src={mediosDePago}  className="my-auto img-fluid" />
                 </div>
                 <div className="row col-lg-4 col-sm-12 text-sm-center mt-1 col-lg-3 text-white mt-sm-5 mx-sm-autp">
                     <div className="col-sm-6">

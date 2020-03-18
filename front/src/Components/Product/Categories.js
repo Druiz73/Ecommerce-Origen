@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from "react-router-dom";
+import React from 'react';
+import { Link } from "react-router-dom";
 import './categories.css';
+import imgMayor from '../imgs/xMayor.png'
+import imgMenor from '../imgs/xMenor.png'
 
 export default function Categories(props) {
 
-    const [typeSale, setTypeSale] = useState({ sale: "minorista" })
+
 
     function letId(id) {
         return "/productPage/" + id
@@ -16,20 +18,17 @@ export default function Categories(props) {
         <div className="col-12">
             <div className="container-fluid section">
                 <div data-spy="scroll" data-target="#navbar-example3" className="mb-3 col-12 col-md-6 col-lg-12" data-offset="0">
-
                     {
                         props.typeSale === "minorista" ? <div className="titleCat bg-dark  text-center">
-                            <h1 className="title text-white" >{props.nombreCat.nombre}</h1>
+                            <h1 className="title text-white" >{props.nombreCat}</h1>
                             <h3 className="text-white"> PRECIOS {(props.typeSale).toUpperCase()}</h3>
                         </div>
                             :
                             <div className="titleCat bg-warning  text-center">
-                                <h1 className="title text-white" >{props.nombreCat.nombre}</h1>
+                                <h1 className="title text-white" >{props.nombreCat}</h1>
                                 <h3 className="text-dark"> PRECIOS {(props.typeSale).toUpperCase()}</h3>
                             </div>
                     }
-
-
                     <div className="row d-flex justify-content-around">
                         {props.products.map((element) => (
                             <div className="card m-1 mb-3 mt-3 mr-3 col-12 col-lg-3 item-border cards" id={element.category}>
@@ -40,19 +39,28 @@ export default function Categories(props) {
                                             <h3 class="card-title text-center">{element.titulo}</h3>
                                             <p class="card-text text-center">{element.descripcion}</p>
                                             {
-                                                props.typeSale === "minorista" ? <p class="card-text text-center"><small class="text-muted">${element.precioMenor}</small></p> :
-                                                    <p class="card-text text-center"><small class="text-muted">${element.precioMayor}</small></p>
+                                                props.typeSale === "minorista" ? <p class="card-text text-center"><small class="text-dark">${element.precioMenor}</small></p> :
+                                                    <p class="card-text text-center"><small class="text-dark">${element.precioMayor}</small></p>
                                             }
-
-                                            <div className="text-center">
-                                                <Link to={letId(element._id)} name="articulos" type="button" class="btn btn-warning">Ver Producto</Link>
-                                            </div>
+                                            {
+                                                props.typeSale === "minorista" ? <div className="text-center">
+                                                    <Link to={letId(element._id)} name="articulos" type="button" class="btn btn-dark">Ver Producto</Link>
+                                                </div>
+                                                    :
+                                                    <div className="text-center">
+                                                        <Link to={letId(element._id)} name="articulos" type="button" class="btn btn-warning">Ver Producto</Link>
+                                                    </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
+                </div>
+                <div className="col-12 my-3">
+                    {props.typeSale === "mayorista" ? <Link><img onClick={(valor) => props.getTipoVenta("minorista")} className="img-fluid" src={imgMenor} /> </Link> : <Link><img onClick={(valor) => props.getTipoVenta("mayorista")} className="img-fluid" src={imgMayor} /> </Link>}
+
                 </div>
             </div>
         </div>

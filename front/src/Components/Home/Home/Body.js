@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../../imgs/Jokker 2.png';
-import jeans from '../../imgs/jeans.png';
-import camisas from '../../imgs/camisas.png';
 import destacados from '../../imgs/destacados.png';
-import camisaEstampada from '../../imgs/camisaEstampada.jpg';
-import pantaloRayado from '../../imgs/pantalonRayado.jpg';
-import jeanBlue from '../../imgs/jeanBlue.jpg';
-import verTodos from '../../imgs/verTodos.png';
 import flyer from '../../imgs/WEB1Recurso33.png';
 import envios from '../../imgs/envios.png';
 import pagos from '../../imgs/mediosDePago.png';
@@ -16,8 +10,14 @@ import {
     BrowserRouter as Router,
     Link
 } from "react-router-dom";
+import {
+    Card, CardImg, CardText, CardBody,
+    CardTitle, CardSubtitle, Button
+} from 'reactstrap';
 
 export default function Body(props) {
+
+
 
     const [suscribe, setSuscribe] = useState({ email: "" })
 
@@ -26,8 +26,9 @@ export default function Body(props) {
         setSuscribe({ ...suscribe, email: value })
     })
 
-    function saveSuscriber(email) {
+    console.log(props.productHome)
 
+    function saveSuscriber(email) {
         let inputFile = document.getElementById("suscribe");
         fetch("http://localhost:4000/suscriber", {
             method: 'POST',
@@ -52,15 +53,19 @@ export default function Body(props) {
     }
 
 
-    function letId(id) {
+    function letIdCat(id) {
         return "/categories/" + id
+    }
+
+    function letIdProduct(id) {
+        return "/productPage/" + id
     }
     return (
         <div>
-            <div className="container principal col-10 mx-auto" >
+            <div className="container fluid principal  mx-auto" >
                 <img src={flyer} className="img-fluid" />
             </div>
-            <div className="container">
+            <div className="container line">
                 <div className="row">
                     <div className="col-11">
                         <hr className="border border-secondary h-25 bg-secondary" />
@@ -70,22 +75,12 @@ export default function Body(props) {
                     </div>
                 </div>
             </div>
-            <div className="container">
-                <div className="row">
-                    <div className="col-6">
-                        <img className="img-fluid" src={jeans} />
-                    </div>
-                    <div className="col-6">
-                        <img className="img-fluid" src={camisas} />
-                    </div>
-                </div>
-            </div>
             <div className="container my-4">
                 <div className="row">
                     {
                         props.categoriesHome.map((element) => (
-                            <div className="col-6 ">
-                                <Link to={letId(element._id)} onClick={(id)=>props.getById(element._id)}> <img className="img-fluid my-3" src={element.image['0'].base64} /></Link>
+                            <div className="col-12 col-sm-6 ">
+                                <Link to={letIdCat(element._id)} onClick={(id) => props.getById(element._id)}> <img className="img-fluid my-3" src={element.image['0'].base64} /></Link>
                             </div>
                         ))
                     }
@@ -105,21 +100,24 @@ export default function Body(props) {
                 <img src={destacados} className="img-fluid w-25 mt-2" />
             </div>
             <div className="container my-4">
-                <div className="row">
-                    <div className="col-4">
-                        <img className="img-fluid" src={camisaEstampada} />
-                    </div>
-                    <div className="col-4">
-                        <img className="img-fluid" src={pantaloRayado} />
-                    </div>
-                    <div className="col-4">
-                        <img className="img-fluid" src={jeanBlue} />
-                    </div>
+                <div className="row justify-content-lg-around card-deck">
+                    {
+                        props.productHome.map(element => (
+                            <Card className="border border-warning col-lg-3 col-sm-5 col-12 my-3 mx-3 pr-1 w-50">
+                                <Link to={letIdProduct(element._id)}><CardImg className=" text-center mx-auto" src={element.imageUrl['0'].base64} alt="Card image cap" /></Link>
+                                <CardBody>
+                                    <CardTitle ><h1 className="text-center">{element.titulo} </h1></CardTitle>
+                                    <CardSubtitle ><h2 className="text-center mt-5"><strong>${element.precioMenor}</strong></h2></CardSubtitle>
+                                </CardBody>
+                                <Link to={letIdProduct(element._id)} onClick={(id) => props.getById(element._id)} className="btn btn-warning text-white mx-auto text-center mb-0">Comprar ahora </Link>
+                            </Card>
+                        ))
+                    }
                 </div>
             </div>
-            <div className="container mx-auto mt-4 text-center">
+            {/* <div className="container mx-auto mt-4 text-center">
                 <img src={verTodos} className="img-fluid " />
-            </div>
+            </div> */}
             <div className="container-fluid my-4 ">
                 <div className="row bg-warning descuentos h-auto">
                     <div className="col-12 col-sm-7 col-lg-6 d-flex justify-content-center">

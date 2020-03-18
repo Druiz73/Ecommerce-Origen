@@ -155,8 +155,9 @@ export default function Create(props) {
             <FormGroup>
                 <Label for="categoria">Categoria</Label>
                 <Input type="select" value={product.category} onChange={(e) => handleCategoria(e)}>
+                    <option defaultValue="Seleccionar Categoria">Seleccionar Categoria</option>
                     {props.category.map((element) => (
-                        <option key={element._id} value={element._id} defaultValue={element[0]} selected>{element.nombre}</option>
+                        <option key={element._id} value={element._id}  selected>{element.nombre}</option>
                     ))}
                 </Input>
             </FormGroup>

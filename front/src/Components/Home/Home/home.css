@@ -5,3 +5,15 @@
 .card{
     background-color: rgb(230, 230, 230);
 }
+
+@media only screen and (max-width: 850px) {
+    .card{
+      width: 3vw;
+    }
+  }
+  @media only screen and (max-width: 850px) {
+    .line{
+      display: none;
+    }
+  }
+

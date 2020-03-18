@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import mercadopago from 'mercadopago';
 
 import indexRouter from './routes/index';
 import categoriesRouter from './routes/categories';
@@ -13,7 +14,12 @@ import registerRouter from './routes/register';
 import saleRouter from './routes/Sales';
 import adminRouter from './routes/admins';
 import suscriberRouter from './routes/suscribers';
-import mercadoPago from './routes/mercado-pago';
+
+
+// Agrega credenciales
+mercadopago.configure({
+    access_token: 'TEST-4338767001765102-031414-316e8537f8e6023b2165733934397426-168068507' // agregar el TOKEN de cada uno!
+});
 
 const app = express();
 
@@ -25,9 +31,7 @@ app.use((req, res, next) => {
     next();
 });
 
-
 app.use(logger('dev'));
-
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
@@ -43,7 +47,6 @@ app.use('/register', registerRouter);
 app.use('/sales', saleRouter);
 app.use('/admin', adminRouter);
 app.use('/suscriber', suscriberRouter);
-app.use('/mercado-pago', mercadoPago);
 // app.use('/orders', ordersRouter);
 // app.use('/products', productsRouter);
 

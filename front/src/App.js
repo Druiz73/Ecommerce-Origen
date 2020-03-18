@@ -17,6 +17,7 @@ import Login from './Components/User/Login/Login';
 import Profile from './Components/User/Profile/Profile';
 import Cart from './Components/Cart/Cart';
 import Page404 from './Components/User/Page404/Page404';
+import SaleReturn from './Components/Product/SaleReturn'
 import middleware from './Components/Middleware/middleware';
 import LoginAdmin from './Components/User/Admin/LoginAdmin';
 
@@ -28,14 +29,17 @@ function App() {
     home: []
   });
 
-  const [categories, setCategories] = useState({categories: []})
+  const [productHome, setproductHome] = useState([])
 
-  
+  const [categories, setCategories] = useState({ categories: [] })
+
+
   //Cambia de estado minorista o mayorista
   const [typeSale, setTypeSale] = useState({ sale: "minorista" });
   const getTipoVenta = ((valor) => {
     setTypeSale({ sale: valor })
   });
+
 
   //Si esta logueado guarda el usuario, lo decofifica y lo paso al header
   const [log, setLog] = useState({})
@@ -51,7 +55,7 @@ function App() {
   })
 
   //cant de articulos en el carrito
-  const [productCat, setProductCat] = useState({})
+  const [productCat, setProductCat] = useState({ nombre: "" })
   const productXMayor = JSON.parse(localStorage.getItem("mayorista")) || [];
   const productXMenor = JSON.parse(localStorage.getItem("minorista")) || [];
   const totalCart = productXMayor.length + productXMenor.length;
@@ -70,7 +74,7 @@ function App() {
     fetch("http://localhost:4000/categories")
       .then(resp => resp.json())
       .then(data => {
-       
+
         setCategories({
           ...categories,
           categories: data
@@ -86,10 +90,19 @@ function App() {
         })
       });
 
+    fetch("http://localhost:4000/products/random", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        setproductHome(data)
+      })
 
     getLogin(userLog);
     setear(productXMayor.length, productXMenor.length)
-
   }, [])
 
   function getById(id) {
@@ -105,7 +118,7 @@ function App() {
     fetch("http://localhost:4000/categories/" + id)
       .then(resp => resp.json())
       .then(data => {
-        setProductCat(data)
+        setProductCat({ ...productCat, nombre: data.nombre })
       })
   }
 
@@ -116,8 +129,9 @@ function App() {
         <Route path="/administrar" component={LoginAdmin} />
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
+        <Route path="/returnMercado" component={SaleReturn} />
         <Route path="/categories/:id" >
-          <Categories typeSale={typeSale.sale}  products={Items.product} nombreCat={productCat} />
+          <Categories getTipoVenta={(valor) => getTipoVenta(valor)} typeSale={typeSale.sale} products={Items.product} nombreCat={productCat.nombre} />
         </Route>
         <Route path="/login"  >
           <Login getLogin={(local) => getLogin(local)} />
@@ -132,7 +146,7 @@ function App() {
           <Admin />
         </Route>
         <Route path="/" >
-          <Body categoriesHome={Items.home} getById={(id) => getById(id)}/>
+          <Body categoriesHome={Items.home} getById={(id) => getById(id)} productHome={productHome} />
         </Route>
         <Route path="*" component={Page404} />
       </Switch>

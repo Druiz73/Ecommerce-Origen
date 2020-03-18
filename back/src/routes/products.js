@@ -11,10 +11,10 @@ var router = express.Router();
 router.get('/:id', (req, res, next) => {
     let productIds = req.params.id;
     products.find({
-            'category': {
-                $in: productIds
-            }
-        })
+        'category': {
+            $in: productIds
+        }
+    })
         .exec((err, product) => {
             if (err) return res.send(err)
             return res.status(200).send(product)
@@ -32,39 +32,65 @@ router.get('/cart/:id', function (req, res, next) {
 });
 
 
-
-router.get('/', function (req, res, next) {
+router.post('/random', function (req, res, next) {
     products.find((error, data) => {
         if (error) {
             res.send(error);
         } else {
-            res.send(data);
+            let productsRandom;
+            let filterProducts = [];
+            let flag = 0;
+            let compare
+            do {
+                productsRandom = data[Math.floor(Math.random() * data.length)];
+                filterProducts.forEach(Element=>{
+                    compare= Object.is(productsRandom._id,Element._id)
+                })
+                if(!compare){
+                    filterProducts.push(productsRandom);
+                    flag ++;
+                }
+                
+            }while(flag < 3)
+            res.send(filterProducts)
         }
     });
 });
 
-router.get('/search', async function (req, res, next) {
-    let productos;
-    if (req.query.q) {
-        productos = await productos.find({
-            $text: {
-                $search: req.query.q
-            }
-        }, 
-        {
-            score: {
-                $meta: 'textScore'
-            }
+router.get('/', function (req, res, next) {
+    products.find((error, data) => {
+        if (error) {
+            res.send(error)
+        } else {
+            res.send(data)
         }
-        ).sort({
-            score: {
-                $meta: 'textScore'
-            }
-        });
-    }
-    res.json(productos);
-
+    })
 });
+
+
+
+// router.get('/search', async function (req, res, next) {
+//     let productos;
+//     if (req.query.q) {
+//         productos = await productos.find({
+//             $text: {
+//                 $search: req.query.q
+//             }
+//         }, 
+//         {
+//             score: {
+//                 $meta: 'textScore'
+//             }
+//         }
+//         ).sort({
+//             score: {
+//                 $meta: 'textScore'
+//             }
+//         });
+//     }
+//     res.json(productos);
+
+// });
 
 router.post('/create', function (req, res, next) {
 
@@ -103,16 +129,16 @@ router.post('/create', function (req, res, next) {
 
 router.put('/edit/:id', function (req, res, next) {
     products.updateOne({
-            _id: req.params.id,
-        }, {
-            titulo: req.body.titulo,
-            precioMayor: req.body.precioMayor,
-            precioMenor: req.body.precioMenor,
-            stock: req.body.stock,
-            descripcion: req.body.descripcion,
-            talles: req.body.talles,
-            category: req.body.category
-        },
+        _id: req.params.id,
+    }, {
+        titulo: req.body.titulo,
+        precioMayor: req.body.precioMayor,
+        precioMenor: req.body.precioMenor,
+        stock: req.body.stock,
+        descripcion: req.body.descripcion,
+        talles: req.body.talles,
+        category: req.body.category
+    },
         (err, data) => {
             if (err) {
                 res.send(err)
