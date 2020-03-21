@@ -4,14 +4,13 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import mercadopago from 'mercadopago';
 
-import indexRouter from './routes/index';
+
 import categoriesRouter from './routes/categories';
 import cartItemsRouter from './routes/cartItems';
-import ordersRouter from './routes/orders';
 import productsRouter from './routes/products';
 import usersRouter from './routes/users';
 import registerRouter from './routes/register';
-import saleRouter from './routes/Sales';
+import saleRouter from './routes/sales';
 import adminRouter from './routes/admins';
 import suscriberRouter from './routes/suscribers';
 
