@@ -42,8 +42,7 @@ router.put('/:id', function (req, res, next) {
 })
 
 router.post('/', function (req, res, next) {
-    console.log("asdsa", req.body)
-    
+   
     let products = req.body.products.map((item) => ({
         title:item.titulo,
         quantity: parseInt(item.quantity),

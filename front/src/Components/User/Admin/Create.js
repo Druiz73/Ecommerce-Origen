@@ -131,7 +131,7 @@ export default function Create(props) {
 
     function deseleccionar_todo(){
         for (let i=0;i<document.f1.elements.length;i++)
-           if(document.f1.elements[i].type == "checkbox")
+           if(document.f1.elements[i].type === "checkbox")
               document.f1.elements[i].checked=0
      }
 

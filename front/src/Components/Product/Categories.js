@@ -30,7 +30,7 @@ export default function Categories(props) {
                             </div>
                     }
                     <div className="row d-flex justify-content-around">
-                        {props.products.map((element) => (
+                        {props.products.map((element) => ( element.stock > 0 ?
                             <div className="card m-1 mb-3 mt-3 mr-3 col-12 col-lg-3 item-border cards" id={element.category}>
                                 <div className="row no-gutters">
                                     <img className="img-fluid" src={element.imageUrl['0'].base64} />
@@ -54,7 +54,7 @@ export default function Categories(props) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> : <div className="d-none"/>
                         ))}
                     </div>
                 </div>

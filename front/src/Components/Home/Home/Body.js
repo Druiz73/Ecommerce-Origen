@@ -11,13 +11,11 @@ import {
     Link
 } from "react-router-dom";
 import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    Card, CardImg, CardBody,
+    CardTitle, CardSubtitle
 } from 'reactstrap';
 
 export default function Body(props) {
-
-
 
     const [suscribe, setSuscribe] = useState({ email: "" })
 
@@ -25,8 +23,6 @@ export default function Body(props) {
         let value = e.target.value
         setSuscribe({ ...suscribe, email: value })
     })
-
-    console.log(props.productHome)
 
     function saveSuscriber(email) {
         let inputFile = document.getElementById("suscribe");
@@ -109,7 +105,7 @@ export default function Body(props) {
                                     <CardTitle ><h1 className="text-center">{element.titulo} </h1></CardTitle>
                                     <CardSubtitle ><h2 className="text-center mt-5"><strong>${element.precioMenor}</strong></h2></CardSubtitle>
                                 </CardBody>
-                                <Link to={letIdProduct(element._id)} onClick={(id) => props.getById(element._id)} className="btn btn-warning text-white mx-auto text-center mb-0">Comprar ahora </Link>
+                                <Link to={letIdProduct(element._id)}  className="btn btn-warning text-white mx-auto text-center mb-0">Comprar ahora </Link>
                             </Card>
                         ))
                     }

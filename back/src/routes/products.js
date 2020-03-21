@@ -43,15 +43,15 @@ router.post('/random', function (req, res, next) {
             let compare
             do {
                 productsRandom = data[Math.floor(Math.random() * data.length)];
-                filterProducts.forEach(Element=>{
-                    compare= Object.is(productsRandom._id,Element._id)
+                filterProducts.forEach(Element => {
+                    compare = Object.is(productsRandom._id, Element._id)
                 })
-                if(!compare){
+                if (!compare) {
                     filterProducts.push(productsRandom);
-                    flag ++;
+                    flag++;
                 }
-                
-            }while(flag < 3)
+
+            } while (flag < 3)
             res.send(filterProducts)
         }
     });
@@ -66,6 +66,30 @@ router.get('/', function (req, res, next) {
         }
     })
 });
+
+router.post('/sale', async function (req, res, next) {
+    let flag;
+    let titleProduct = req.body.products.map((item) => (
+        products.find({ titulo: item.title }, { name: 1, stock: 1 },
+            function (err, product) {
+                if (err) throw err;
+                let stockNew = product[0].stock - parseInt(item.quantity);
+                if (stockNew > 0) {
+                    products.findByIdAndUpdate(product[0]._id, { stock: stockNew }, function (err, data) {
+                        if (err) throw err;
+                        if (data) return flag = true;
+                    })
+                }
+                else {
+                    flag = "Stock minimo sobrepasado" + item.title
+                    return flag;
+                }
+            })
+    ))
+    res.send(flag)
+});
+
+
 
 
 

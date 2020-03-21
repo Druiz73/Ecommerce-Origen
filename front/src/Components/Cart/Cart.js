@@ -64,134 +64,132 @@ export default function Carrito(props) {
             localStorage.setItem('mayorista', JSON.stringify(artMayor));
             props.setear(artMayor.length, props.productXMenor.length)
         }
-        else(alert("El monto minimo para una compra por mayor es de $3500"))
+        else (alert("El monto minimo para una compra por mayor es de $3500"))
     }
 
-        //SAle of minority price
-        function retailSale(e) {
-            e.preventDefault()
-            fetch(`http://localhost:4000/sales`, {
-                method: "POST",
-                body: JSON.stringify({
-                    products: artMEnor
-                }),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(res => res.json())
-                .then(data => console.log(data.init_point))
-                .catch(err => console.error(err, "error"))
-                // window.location.href = data.init_point
-            artMEnor.splice(artMEnor);
-            setArtMEnor(artMEnor);
-            localStorage.setItem('minorista', JSON.stringify(artMEnor));
-            props.setear(props.productXMayor.length, artMEnor.length)
+    //SAle of minority price
+    function retailSale(e) {
+        e.preventDefault()
+        fetch(`http://localhost:4000/sales`, {
+            method: "POST",
+            body: JSON.stringify({
+                products: artMEnor
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => console.log(data.init_point))
+            .catch(err => console.error(err, "error"))
+        // window.location.href = data.init_point
+        artMEnor.splice(artMEnor);
+        setArtMEnor(artMEnor);
+        localStorage.setItem('minorista', JSON.stringify(artMEnor));
+        props.setear(props.productXMayor.length, artMEnor.length)
 
-        }
-    
-
-
-        return (
-            <div>
-                <Nav tabs>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: activeTab === '1' })}
-                            onClick={() => { toggle('1'); }}>
-                            Productos Seleccionados Por Menor
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: activeTab === '2' })}
-                            onClick={() => { toggle('2'); }}>
-                            Productos Seleccionados Por Mayor
-                        </NavLink>
-                    </NavItem>
-                </Nav>
-                <TabContent activeTab={activeTab}>
-                    <TabPane tabId="1">
-                        <div className="container my-5">
-                            <h1 className="text-dark font-italic">Productos Seleccionados x Menor</h1>
-                        </div>
-                        <Table bordered>
-                            <thead>
-                                <tr>
-                                    <th className="text-center">Imagen</th>
-                                    <th className="text-center">Producto</th>
-                                    <th className="text-center">Talle</th>
-                                    <th className="text-center">Cantidad</th>
-                                    <th className="text-center">Total</th>
-                                    <th className="text-center">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {artMEnor.map((item, index) => (
-                                    <tr>
-                                        <th className="w-25 text-center"><img className="img-thumbnail w-50" src={item.imageUrl["0"].base64} alt="" />  </th>
-                                        <th className="text-center">{item.titulo}</th>
-                                        <th className="text-center">{item.talles}</th>
-                                        <th className="text-center">{item.quantity}</th>
-                                        <th className="text-center">{item.precioMenor * item.quantity}</th>
-                                        <th className="text-center my-auto"><button className="btn btn-danger" onClick={() => deleteArtMenor(index)}>Eliminar</button></th>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                        <div className="container rounded-bottom mb-2">
-                            <div className="d-flex justify-content-end">
-                                <h5 className="mr-5 my-1">Total $ {totalMenor}</h5>
-                            </div>
-                            <div className="row">
-                                <Link to="/" className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
-                                <Link  id="xmenor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => retailSale(e)}>Finalizar Compra</Link>
-                            </div>
-                        </div>
-                    </TabPane>
-                    <TabPane tabId="2">
-                        <div className="container my-5">
-                            <h1 className="text-dark font-italic">Productos Seleccionados x mayor</h1>
-                            <h2 className="text-dark font-italic">Recuerde que el monto total debe ser mayor a $3500</h2>
-                        </div>
-                        <Table bordered>
-                            <thead>
-                                <tr>
-                                    <th className="text-center">Imagen</th>
-                                    <th className="text-center">Producto</th>
-                                    <th className="text-center">Talle</th>
-                                    <th className="text-center">Cantidad</th>
-                                    <th className="text-center">Total</th>
-                                    <th className="text-center">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {artMayor.map((item, index) => (
-                                    <tr>
-                                        <th className="w-25 text-center"><img className="img-thumbnail w-50" src={item.imageUrl["0"].base64} alt="" />  </th>
-                                        <th className="text-center">{item.titulo}</th>
-                                        <th className="text-center">{item.talles}</th>
-                                        <th className="text-center">{item.quantity}</th>
-                                        <th className="text-center">{item.precioMayor * item.quantity}</th>
-                                        <th className="text-center my-auto"><button className="btn btn-danger" onClick={() => deleteArtMayor(index)}>Eliminar</button></th>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                        <div className="container rounded-bottom mb-2">
-                            <div className="d-flex justify-content-end">
-                                <h5 className="mr-5 my-1">Total $ {totalMayor}</h5>
-                            </div>
-                            <div className="row">
-                                <Link className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
-                                <Link  id="xmayor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => wholesale(e)}>Finalizar Compra</Link>
-                            </div>
-                        </div>
-
-                    </TabPane>
-
-                </TabContent>
-            </div >
-        )
     }
+
+    return (
+        <div>
+            <Nav tabs>
+                <NavItem className="col-6">
+                    <NavLink
+                        className={classnames({ active: activeTab === '1' })}
+                        onClick={() => { toggle('1'); }}>
+                        Productos Seleccionados Por Menor
+                        </NavLink>
+                </NavItem>
+                <NavItem className="col-6">
+                    <NavLink
+                        className={classnames({ active: activeTab === '2' })}
+                        onClick={() => { toggle('2'); }}>
+                        Productos Seleccionados Por Mayor
+                        </NavLink>
+                </NavItem>
+            </Nav>
+            <TabContent activeTab={activeTab}>
+                <TabPane tabId="1">
+                    <div className="container my-5">
+                        <h1 className="text-dark font-italic">Productos Seleccionados x Menor</h1>
+                    </div>
+                    <Table bordered>
+                        <thead>
+                            <tr>
+                                <th className="text-center">Imagen</th>
+                                <th className="text-center">Producto</th>
+                                <th className="text-center">Talle</th>
+                                <th className="text-center">Cantidad</th>
+                                <th className="text-center">Total</th>
+                                <th className="text-center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {artMEnor.map((item, index) => (
+                                <tr>
+                                    <th className="w-25 text-center"><img className="img-thumbnail w-50" src={item.imageUrl["0"].base64} alt="" />  </th>
+                                    <th className="text-center">{item.titulo}</th>
+                                    <th className="text-center">{item.talles}</th>
+                                    <th className="text-center">{item.quantity}</th>
+                                    <th className="text-center">{item.precioMenor * item.quantity}</th>
+                                    <th className="text-center my-auto"><button className="btn btn-danger" onClick={() => deleteArtMenor(index)}>Eliminar</button></th>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                    <div className="container rounded-bottom mb-2">
+                        <div className="d-flex justify-content-end">
+                            <h5 className="mr-5 my-1">Total $ {totalMenor}</h5>
+                        </div>
+                        <div className="row">
+                            <Link to="/" className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
+                            <Link id="xmenor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => retailSale(e)}>Finalizar Compra</Link>
+                        </div>
+                    </div>
+                </TabPane>
+                <TabPane tabId="2">
+                    <div className="container my-5">
+                        <h1 className="text-dark font-italic">Productos Seleccionados x mayor</h1>
+                        <h2 className="text-dark font-italic">Recuerde que el monto total debe ser mayor a $3500</h2>
+                    </div>
+                    <Table bordered>
+                        <thead>
+                            <tr>
+                                <th className="text-center">Imagen</th>
+                                <th className="text-center">Producto</th>
+                                <th className="text-center">Talle</th>
+                                <th className="text-center">Cantidad</th>
+                                <th className="text-center">Total</th>
+                                <th className="text-center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {artMayor.map((item, index) => (
+                                <tr>
+                                    <th className="w-25 text-center"><img className="img-thumbnail w-50" src={item.imageUrl["0"].base64} alt="" />  </th>
+                                    <th className="text-center">{item.titulo}</th>
+                                    <th className="text-center">{item.talles}</th>
+                                    <th className="text-center">{item.quantity}</th>
+                                    <th className="text-center">{item.precioMayor * item.quantity}</th>
+                                    <th className="text-center my-auto"><button className="btn btn-danger" onClick={() => deleteArtMayor(index)}>Eliminar</button></th>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                    <div className="container rounded-bottom mb-2">
+                        <div className="d-flex justify-content-end">
+                            <h5 className="mr-5 my-1">Total $ {totalMayor}</h5>
+                        </div>
+                        <div className="row">
+                            <Link className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
+                            <Link id="xmayor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => wholesale(e)}>Finalizar Compra</Link>
+                        </div>
+                    </div>
+
+                </TabPane>
+
+            </TabContent>
+        </div >
+    )
+}

@@ -1,32 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import aproved from '../imgs/jokkerAPROBADO.png';
+import approved from '../imgs/jokkerAPROBADO.png';
+import rejected from '../imgs/JOKKERRECHAZADO.png';
 
-export default function SaleReturn(props) {
-const [returnMercadoPago, setreturnMercadoPago] = useState()
-
+export default function SaleReturn() {
+    const [sale, setSale] = useState({ products: "" })
 
     let id = window.location.search
+    const urlParams = new URLSearchParams(id)
+    let idSale = urlParams.get('external_reference');
+    let saleState = urlParams.get('collection_status');
+    useEffect(() => {
+        changeStatusSale(idSale, saleState);
+        saleApproved(saleState, idSale);
+    }, [])
 
-    //Obtener la url devuelta por mercado pago y convertirla en objetos
-    function dividirCadena(cadenaADividir, separador) {
-        let save = [];
-        let arrayDeCadenas = cadenaADividir.split(separador);
-        arrayDeCadenas.splice(0, 1)
-        for (let index = 0; index < arrayDeCadenas.length; index++) {
-            let cadena = arrayDeCadenas[index];
-            cadena = cadena.replace("=", ":");
-            const name = new Object(cadena);
-            save.push(name)
+    function saleApproved(resp, idsale) {
+        if (resp === "approved") {
+            getSale(idsale)
         }
-
-        console.log(save)
-        setreturnMercadoPago(save)
     }
 
-    return (
-        <div>
-            <p>hello moto {id}</p>
-            {dividirCadena(id, "&")}
-        </div>
-    )
+    //Traer venta y Cambiar el estado
+    function changeStatusSale(id, state) {
+        //modificar estado
+        fetch("http://localhost:4000/sales/" + id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status: state
+            })
+        })
+            .then(resp => resp.json())
+            .then(data => { console.log(data) });
+    }
+
+    //traer venta, guardar en un estado los productos vendidos
+    function getSale(id) {
+        fetch("http://localhost:4000/sales/" + id)
+            .then(resp => resp.json())
+            .then(data => {
+                sendProductToUpdate(data.products)
+                console.log(data)
+            })
+
+    }
+
+    function sendProductToUpdate(products) {
+
+        fetch("http://localhost:4000/products/sale", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                products: products
+            })
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data)
+            })
+    }
+
+    if (saleState === "approved") {
+        return (
+            <div className="container-fluid col-12">
+                <a href="http://localhost:3000"><img className="img-fluid" src={approved} ></img></a>
+            </div>
+        )
+    } else if (saleState === "rejected") {
+        return (
+            <div className="container-fluid col-12">
+                <a href="http://localhost:3000"><img className="img-fluid" src={rejected}></img></a>
+            </div>
+        )
+    }
+
 }
