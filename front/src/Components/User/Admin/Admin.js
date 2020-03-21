@@ -5,6 +5,7 @@ import Create from './Create';
 import TableProducts from './TableProducts';
 import Category from './Category';
 import Suscribers from './Suscribers';
+import Sales from './Sales';
 
 
 
@@ -22,10 +23,12 @@ export default class Admin extends Component {
         }
     }
 
+    //Manage tabs 
     toggle = (tab) => {
         if (this.state.activeTab !== tab) this.setState({ activeTab: tab })
     }
 
+    //render start of aplication
     componentDidMount() {
         this.get();
         this.getCategory();
@@ -97,7 +100,6 @@ export default class Admin extends Component {
         fetch("http://localhost:4000/categories")
             .then(resp => resp.json())
             .then(data => {
-                console.log(data)
                 this.setState({
                     category: data
                 })
@@ -137,6 +139,7 @@ export default class Admin extends Component {
             })
     }
 
+    //delete suscriber
     deleteSuscriber(id) {
         fetch(`http://localhost:4000/suscriber/${id}`, {
             method: 'DELETE'
@@ -147,11 +150,12 @@ export default class Admin extends Component {
             })
     }
 
-
+    //save images of product
     getFiles(files) {
         this.setState({ imageUrl: files })
     }
 
+    //save inputs values
     handleInput(e) {
         const { name, value } = e.target;//destructurin de los valores enviados por el metodo onchange de cada input
         let regex = new RegExp("^[ñíóáéú a-zA-Z0-9 /@/ /./]+$");
@@ -200,6 +204,13 @@ export default class Admin extends Component {
                             Subscriptores
                          </NavLink>
                     </NavItem>
+                    <NavItem>
+                        <NavLink
+                            className={classnames({ active: this.state.activeTab === '5' })}
+                            onClick={() => { this.toggle('5'); }}>
+                            Ventas
+                         </NavLink>
+                    </NavItem>
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
@@ -225,6 +236,13 @@ export default class Admin extends Component {
                         <Row>
                             <Col sm="12">
                                 <Suscribers suscribers={this.state.suscribers} delete={(id) => this.deleteSuscriber(id)} />
+                            </Col>
+                        </Row>
+                    </TabPane>
+                    <TabPane tabId="5">
+                        <Row>
+                            <Col sm="12">
+                                <Sales  />
                             </Col>
                         </Row>
                     </TabPane>

@@ -7,7 +7,7 @@ process.env.SECRET_KEY = 'secret';
 
 
 mongoose.connect('mongodb://localhost:27017/jokkerDB', {
-    useNewUrlParser: true
+    useNewUrlParser: true 
 });
 
 var router = express.Router();

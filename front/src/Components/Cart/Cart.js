@@ -8,7 +8,7 @@ export default function Carrito(props) {
     const [artMEnor, setArtMEnor] = useState(props.productXMenor);
     const [activeTab, setActiveTab] = useState("1")
 
-
+    //Delete article of list sale of MAyor
     function deleteArtMayor(index) {
         let art2 = artMayor.slice();
         art2.splice(index, 1);
@@ -17,6 +17,7 @@ export default function Carrito(props) {
         props.setear(art2.length, props.productXMenor.length)
     }
 
+    //Delete article of list sale of menor
     function deleteArtMenor(index) {
         let art2 = artMEnor.slice();
         art2.splice(index, 1);
@@ -25,9 +26,12 @@ export default function Carrito(props) {
         props.setear(props.productXMayor.length, art2.length)
     }
 
+    //Manage tabs
     const toggle = (tab) => {
         if (activeTab !== tab) setActiveTab(tab)
     }
+
+    //price total in list
     var totalMayor = 0;
     var totalMenor = 0;
     artMayor.forEach(item => {
@@ -37,10 +41,9 @@ export default function Carrito(props) {
         totalMenor += item.quantity * item.precioMenor
     })
 
-
-    function compraxMayor(e) {
+    //Sale of price for mayor
+    function wholesale(e) {
         e.preventDefault()
-
         if (totalMayor !== 0 && totalMayor > 3500) {
             fetch(`http://localhost:4000/sales`, {
                 method: "POST",
@@ -53,41 +56,20 @@ export default function Carrito(props) {
                 }
             })
                 .then(res => res.json())
-                .then(data => console.log(data, "respuesta"))
+                .then(data => console.log(data.init_point))
                 .catch(err => console.error(err, "error"))
 
             artMayor.splice(artMayor);
             setArtMayor(artMayor);
             localStorage.setItem('mayorista', JSON.stringify(artMayor));
             props.setear(artMayor.length, props.productXMenor.length)
-
-            fetch(`http://localhost:4000/sales/mercado-pago`, {
-                method: "POST",
-                body: JSON.stringify({
-                    products: artMayor
-                }),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    return data.body.init_point
-                })
-                .then(data => {
-                    // window.location.href = data;
-                    console.log(data)
-                })
-                .catch(err => console.error(err, "error"))
         }
-        else {
-            alert("recuerde que la compra por mayor debe superar los 3500 pesos")
-        }
+        else (alert("El monto minimo para una compra por mayor es de $3500"))
     }
 
-    function compraxMenor() {
-
+    //SAle of minority price
+    function retailSale(e) {
+        e.preventDefault()
         fetch(`http://localhost:4000/sales`, {
             method: "POST",
             body: JSON.stringify({
@@ -99,48 +81,27 @@ export default function Carrito(props) {
             }
         })
             .then(res => res.json())
-            .then(data => console.log(data, "respuesta"))
+            .then(data => console.log(data.init_point))
             .catch(err => console.error(err, "error"))
-
+        // window.location.href = data.init_point
         artMEnor.splice(artMEnor);
         setArtMEnor(artMEnor);
         localStorage.setItem('minorista', JSON.stringify(artMEnor));
         props.setear(props.productXMayor.length, artMEnor.length)
 
-        fetch(`http://localhost:4000/sales/mercado-pago`, {
-            method: "POST",
-            body: JSON.stringify({
-                products: artMEnor
-            }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                return data.body.init_point
-            })
-            .then(data => {
-                // window.location.href = data;
-                console.log(data)
-            })
-            .catch(err => console.error(err, "error"))
-        
     }
-
 
     return (
         <div>
             <Nav tabs>
-                <NavItem>
+                <NavItem className="col-6">
                     <NavLink
                         className={classnames({ active: activeTab === '1' })}
                         onClick={() => { toggle('1'); }}>
                         Productos Seleccionados Por Menor
                         </NavLink>
                 </NavItem>
-                <NavItem>
+                <NavItem className="col-6">
                     <NavLink
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}>
@@ -183,7 +144,7 @@ export default function Carrito(props) {
                         </div>
                         <div className="row">
                             <Link to="/" className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
-                            <Link to="/compenespera" id="xmenor" className="mx-auto my-1 btn btn-primary btn-sm border-dark" onClick={() => compraxMenor()}>Finalizar Compra</Link>
+                            <Link id="xmenor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => retailSale(e)}>Finalizar Compra</Link>
                         </div>
                     </div>
                 </TabPane>
@@ -222,7 +183,7 @@ export default function Carrito(props) {
                         </div>
                         <div className="row">
                             <Link className="mx-auto my-1 btn btn-primary btn-sm border-dark" >Seguir Comprando</Link>
-                            <Button type="button" id="xmayor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => compraxMayor(e)}>Finalizar Compra</Button>
+                            <Link id="xmayor" className="mx-auto my-1 btn btn-primary btn-sm border-dark link" onClick={(e) => wholesale(e)}>Finalizar Compra</Link>
                         </div>
                     </div>
 

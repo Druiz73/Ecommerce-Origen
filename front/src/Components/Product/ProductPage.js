@@ -103,7 +103,7 @@ export default function ProductPage(props) {
                             <div className="col-12 col-md-6 text-center my-auto">
                                 <img className="img-fluid mt-5" src={image} />
                             </div>
-                            <div className="col-12 col-md-6 text-center">
+                            <div className="col-12 col-md-6 text-center my-auto">
                                 <h1 className="text-center mb-3 text-dark"><strong>{product.titulo} </strong></h1>
                                 <h5>(*{props.typeSale.sale})</h5>
                                 {

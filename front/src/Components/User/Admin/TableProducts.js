@@ -17,7 +17,7 @@ export default function TableProducts(props) {
     categories: []
   });
 
-
+  //Manage images save
   function onChange(e) {
     // current array of options
     let index
@@ -34,7 +34,7 @@ export default function TableProducts(props) {
     // update the state with the new array of options
     setProduct({ ...product, talles: product.talles })
   }
-
+  //Manage inputs
   function handleInput(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -43,7 +43,8 @@ export default function TableProducts(props) {
       [name]: value
     })
   }
-console.log(product.category)
+
+  //Manage Checkbox
   function checkbox(element) {
 
     for (let f = 0; f < element.length; f++) {
@@ -55,12 +56,13 @@ console.log(product.category)
     }
   }
 
-
+  //Send product to edit
   function productToEdit(element) {
     setProduct({ product: element, id: element._id, titulo: element.titulo, precioMayor: element.precioMayor, precioMenor: element.precioMenor, stock: element.stock, descripcion: element.descripcion, talles: element.talles, category: element.category })
     checkbox(element.talles)
   }
 
+  //Save name category to show in inputs
   function nameCategory(idCategory) {
     for (let index = 0; index < props.categories.length; index++) {
 
@@ -71,12 +73,13 @@ console.log(product.category)
     }
   }
 
+  //save category of inputs to edit
   const handleCategorie = ((e) => {
     setProduct({
-        ...product,
-        category: e.target.value
+      ...product,
+      category: e.target.value
     })
-})
+  })
 
   return (
     <div>
@@ -125,11 +128,11 @@ console.log(product.category)
                     <Input type="text" name="titulo" value={product.titulo} id="tituloEdit" onChange={(e) => handleInput(e)}></Input>
                   </FormGroup>
                   <FormGroup>
-                  <Label>Precio por mayor</Label>
+                    <Label>Precio por mayor</Label>
                     <Input type="number" name="precioMayor" id="mayorEdit" value={product.precioMayor} onChange={(e) => handleInput(e)} />
                   </FormGroup>
                   <FormGroup>
-                  <Label>Precio por Menor</Label>
+                    <Label>Precio por Menor</Label>
                     <Input type="number" name="precioMenor" id="menorEdit" value={product.precioMenor} onChange={(e) => handleInput(e)} />
                   </FormGroup>
                   <FormGroup>
@@ -141,11 +144,11 @@ console.log(product.category)
                     </Input>
                   </FormGroup>
                   <FormGroup>
-                  <Label>Stock</Label>
+                    <Label>Stock</Label>
                     <Input type="number" value={product.stock} name="stock" id="stockEdit" onChange={(e) => handleInput(e)} />
                   </FormGroup>
                   <FormGroup>
-                  <Label>Descripcion del producto</Label>
+                    <Label>Descripcion del producto</Label>
                     <Input type="text" value={product.descripcion} name="descripcion" id="descripcionEdit" onChange={(e) => handleInput(e)} />
                   </FormGroup>
                   <h5>Talles</h5>
@@ -204,7 +207,7 @@ console.log(product.category)
                 </div>
                 <div className="modal-footer">
                   <Button type="button" id="cerrar" className="btn btn-secondary" data-dismiss="modal">Close</Button>
-                  <Button type="button" id="editProduct" onClick={(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) => (props.edit(product.id, product.titulo, product.precioMayor, product.precioMenor, product.stock,  product.descripcion, product.talles, product.category))} className="btn btn-primary" data-dismiss="modal">Modificar</Button>
+                  <Button type="button" id="editProduct" onClick={(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) => (props.edit(product.id, product.titulo, product.precioMayor, product.precioMenor, product.stock, product.descripcion, product.talles, product.category))} className="btn btn-primary" data-dismiss="modal">Modificar</Button>
                 </div>
               </form>
             </div>

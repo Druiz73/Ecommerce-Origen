@@ -2,7 +2,23 @@
     height: min-content;
 }
 
+.letters{
+    font-size: 5vw;
+}
 
-.cat:hover {
-    color:rgba(255, 217, 0, 0.877);
+.letters:hover {
+    text-shadow:rgba(255, 217, 0, 0.877);
   }
+
+  @media only screen and (min-width: 850px) {
+    .cat{
+      font-size: 2vw;
+    }
+  }
+
+
+  @media only screen and (max-width: 600px) {
+  .logo{
+    text-align: center;
+  }
+}

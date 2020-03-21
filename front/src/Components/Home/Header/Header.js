@@ -4,15 +4,16 @@ import {
     Link
 } from "react-router-dom";
 import {
-    Button,
-    Form,
-    Input,
+    Collapse,
     Navbar,
     NavbarToggler,
-    Nav
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    NavbarText
 } from 'reactstrap';
 import carrito from '../../imgs/shopping-cart-symbol-for-e-commerce_icon-icons.com_56124.png';
-import NavbarCat from './NavbarCat';
 import './header.css';
 import logo from '../../imgs/Jokker 2.png';
 
@@ -21,20 +22,26 @@ export default function Header(props) {
 
 
     const [state, setstate] = useState({
-        isOpen: false,
         product: [],
         log: false,
         nombre: ""
     });
-    
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
+
+    function letId(id) {
+        return "/categories/" + id
+    }
+
     const logOut = (() => {
         localStorage.clear("usertoken")
     })
 
-    const toggle = () => setstate(!state.isOpen);
+
     return (
         <div className="container-fluid border-bottom border-dark h-5">
-
             <div className="row">
                 <div className="col-12 bg-dark h-5 d-flex justify-content-between">
                     <div className="col-3 text-white d-flex bd-highlight">
@@ -49,18 +56,25 @@ export default function Header(props) {
                         <Link onClick={(valor) => props.getTipoVenta("minorista")} className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight">Minorista</Link>
                     </div>
                 </div>
-                <nav class="navbar-expand navbar-light bg-light col-lg-12 d-flex">
-                    <a class="navbar-brand" className="col-2" href="#">
-                        <Link to="/"><img className="img-fluid " src={logo} width="120" height="120" alt="" /> </Link>
-                    </a>
-                    <div className="col-6 col-lg-8"  >
-                        <NavbarCat categories={props.categories} getById={(id) => props.getById(id)} />
-                    </div>
-                    <Link to='/cart' className="col-2 text-center my-2">
-                        <img src={carrito} />
-                        <span class="badge badge-danger rounded-circle">{props.cartLength}</span>
+                <Navbar color="light" light expand="md" className="container-fluid">
+                    <Link className="logo col-sm-2 col-lg-2 my-auto" to="/">
+                        <NavbarBrand ><img className="img-fluid" src={logo} width="120" height="120" alt="" /> </NavbarBrand>
                     </Link>
-                </nav>
+                    <NavbarToggler onClick={toggle} />
+                    <Collapse isOpen={isOpen} navbar>
+                        <Nav className="d-flex justify-content-between mx-auto " navbar>
+                            {props.categories.map((element) => (
+                                <NavItem className="cat">
+                                    <Link to={letId(element._id)}> <NavLink className="cat mx-1 text-dark" onClick={(id) => props.getById(element._id)} > {element.nombre}</NavLink></Link>
+                                </NavItem>)
+                            )}
+                        </Nav>
+                    </Collapse>
+                    <Link to='/cart' className="">
+                        <img className="img-fluid" src={carrito} />
+                        <span class="badge badge-danger rounded-circle img-fluid">{props.cartLength}</span>
+                    </Link>
+                </Navbar>
             </div>
         </div>
     )
