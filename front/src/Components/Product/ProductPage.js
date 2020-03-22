@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, useParams } from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 
@@ -17,6 +17,7 @@ export default function ProductPage(props) {
     let { id } = useParams();
 
     useEffect(() => {
+        
         fetch("http://localhost:4000/products/cart/" + id)
             .then(resp => resp.json())
             .then(data => {
@@ -25,13 +26,13 @@ export default function ProductPage(props) {
                 setProduct(data);
                 setTalles(data.talles)
             })
-    }, {});
+    }, [id]);
 
     function handleButton() {
         let checked = false;
         let talle;
         for (let i = 0; i < document.check.elements.length; i++) {
-            if (document.check.elements[i].checked == "1")
+            if (document.check.elements[i].checked === "1")
                 checked = true
         }
         if (checked) {
@@ -39,7 +40,7 @@ export default function ProductPage(props) {
 
                 if (quantity >= 1) {
                     for (let i = 0; i < document.check.elements.length; i++) {
-                        if (document.check.elements[i].type == "checkbox" && document.check.elements[i].checked == "1") {
+                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked === "1") {
 
                             talle = document.check.elements[i].value;
 
@@ -58,7 +59,7 @@ export default function ProductPage(props) {
             else if (props.typeSale.sale === "minorista") {
                 if (quantity >= 1) {
                     for (let i = 0; i < document.check.elements.length; i++) {
-                        if (document.check.elements[i].type == "checkbox" && document.check.elements[i].checked == "1") {
+                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked === "1") {
                             talle = document.check.elements[i].value;
                         }
                     }
@@ -79,7 +80,7 @@ export default function ProductPage(props) {
         // check if the check box is checked or unchecked
         if (e.target.checked) {
             for (let i = 0; i < document.check.elements.length; i++) {
-                if (document.check.elements[i].type == "checkbox")
+                if (document.check.elements[i].type === "checkbox")
                     document.check.elements[i].checked = 0
                 // add the numerical value of the checkbox to options array
             }
@@ -101,7 +102,7 @@ export default function ProductPage(props) {
                     <div className="container">
                         <div className="row">
                             <div className="col-12 col-md-6 text-center my-auto">
-                                <img className="img-fluid mt-5" src={image} />
+                                <img className="img-fluid mt-5" src={image} alt="producto" />
                             </div>
                             <div className="col-12 col-md-6 text-center my-auto">
                                 <h1 className="text-center mb-3 text-dark"><strong>{product.titulo} </strong></h1>

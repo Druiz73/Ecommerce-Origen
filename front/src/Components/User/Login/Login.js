@@ -1,7 +1,6 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-import GoogleLogin from 'react-google-login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,9 +14,6 @@ export default function Login(props) {
   const [sec, setSec] = useState({
   })
 
-  // const responseGoogle = (response) => {
-  //   console.log(response);
-  // }
 
   function handleEmail(e) {
     const name = e.target.name;
@@ -50,7 +46,7 @@ export default function Login(props) {
       .then(res => res.json())
       .then(data => {
 
-        if (data.error == "user does not exist") {
+        if (data.error === "user does not exist") {
           alert("email y contraseña no coinciden")
         }
         else {

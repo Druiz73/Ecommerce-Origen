@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import logo from '../../imgs/Jokker 2.png';
 import destacados from '../../imgs/destacados.png';
 import flyer from '../../imgs/WEB1Recurso33.png';
@@ -7,7 +7,7 @@ import pagos from '../../imgs/mediosDePago.png';
 import seguridad from '../../imgs/seguridad.png';
 import './home.css';
 import {
-    BrowserRouter as Router,
+    
     Link
 } from "react-router-dom";
 import {
@@ -59,7 +59,7 @@ export default function Body(props) {
     return (
         <div>
             <div className="container fluid principal  mx-auto" >
-                <img src={flyer} className="img-fluid" />
+                <img src={flyer} className="img-fluid" alt="flyer"/>
             </div>
             <div className="container line">
                 <div className="row">
@@ -67,7 +67,7 @@ export default function Body(props) {
                         <hr className="border border-secondary h-25 bg-secondary" />
                     </div>
                     <div className="col-1">
-                        <img src={logo} className="img-fluid" width="120" height="120" />
+                        <img src={logo} alt="logo" className="img-fluid" width="120" height="120" />
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@ export default function Body(props) {
                     {
                         props.categoriesHome.map((element) => (
                             <div className="col-12 col-sm-6 ">
-                                <Link to={letIdCat(element._id)} onClick={(id) => props.getById(element._id)}> <img className="img-fluid my-3" src={element.image['0'].base64} /></Link>
+                                <Link to={letIdCat(element._id)} onClick={(id) => props.getById(element._id)}> <img className="img-fluid my-3" alt="categorias" src={element.image['0'].base64} /></Link>
                             </div>
                         ))
                     }
@@ -88,12 +88,12 @@ export default function Body(props) {
                         <hr className="border border-secondary h-25 bg-secondary" />
                     </div>
                     <div className="col-1">
-                        <img src={logo} className="img-fluid" width="120" height="120" />
+                        <img src={logo} alt="logo" className="img-fluid" width="120" height="120" />
                     </div>
                 </div>
             </div>
             <div className="container">
-                <img src={destacados} className="img-fluid w-25 mt-2" />
+                <img src={destacados} alt="destacados" className="img-fluid w-25 mt-2" />
             </div>
             <div className="container my-4">
                 <div className="row justify-content-lg-around card-deck">
@@ -129,21 +129,21 @@ export default function Body(props) {
                 <div className="row">
                     <div className="col-12 col-sm-12 col-lg-4 my-5">
 
-                        <div className="bg-white text-center"> <img src={envios} className="img-fluid " /></div>
+                        <div className="bg-white text-center"> <img src={envios} alt="envios" className="img-fluid " /></div>
                         <h3 className="bg-white text-center mt-3">ENVIOS A TODO EL PAIS</h3>
                         <h4 className="bg-white text-center">Para compras superiores a $2000</h4>
 
                     </div>
                     <div className="col-12 col-sm-12 col-lg-4 my-5 mx-0">
 
-                        <div className="bg-white text-center"> <img src={pagos} className="img-fluid " /></div>
+                        <div className="bg-white text-center"> <img src={pagos} alt="pagos" className="img-fluid " /></div>
                         <h3 className="bg-white text-center mt-3">HASTA 3 CUOTAS SIN INTERES</h3>
                         <h4 className="bg-white text-center">Con tarjetas de creditos seleccionadas</h4>
 
                     </div>
                     <div className="col-12 col-sm-12 col-lg-4 my-3">
 
-                        <div className="bg-white text-center"> <img src={seguridad} className="img-fluid " /></div>
+                        <div className="bg-white text-center"> <img src={seguridad} alt="seguridad" className="img-fluid " /></div>
                         <h3 className="bg-white text-center mt-3">COMPRA 100% SEGURA</h3>
                         <h4 className="bg-white text-center">Protegemos todos tus datos</h4>
 
@@ -154,12 +154,3 @@ export default function Body(props) {
     )
 }
 
-
-{/* <Card className="border-none">
-                            <CardImg className=" w-75 mx-auto" src={camisaEstampada} alt="Card image cap" />
-                            <CardBody>
-                                <CardTitle ><h1 className="text-center">Camisa Estampada </h1></CardTitle>
-                                <CardSubtitle ><h2 className="d-flex justify-content-around mt-5"><strike>$1900,00</strike><strong>$1300,00</strong></h2></CardSubtitle>
-                            </CardBody>
-                            <Button className="btn btn-dark text-white mx-auto text-center mb-0">Comprar ahora</Button>
-                        </Card> */}

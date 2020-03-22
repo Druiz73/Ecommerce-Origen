@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Table, Button } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Table } from 'reactstrap';
 import classnames from 'classnames';
 
 export default function Carrito(props) {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Table } from 'reactstrap';
+import { Button,  FormGroup, Label, Input,  Table } from 'reactstrap';
 
 
 export default function TableProducts(props) {
@@ -50,7 +50,7 @@ export default function TableProducts(props) {
     for (let f = 0; f < element.length; f++) {
       for (let i = 0; i < document.formEdit.elements.length; i++)
 
-        if (document.formEdit.elements[i].type == "checkbox" && document.formEdit.elements[i].value === element[f]) {
+        if (document.formEdit.elements[i].type === "checkbox" && document.formEdit.elements[i].value === element[f]) {
           document.formEdit.elements[i].checked = 1
         }
     }
@@ -68,7 +68,7 @@ export default function TableProducts(props) {
 
       if (idCategory === props.categories[index]._id) {
         return props.categories[index].nombre
-        break;
+       
       }
     }
   }

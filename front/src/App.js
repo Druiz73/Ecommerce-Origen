@@ -18,7 +18,6 @@ import Profile from './Components/User/Profile/Profile';
 import Cart from './Components/Cart/Cart';
 import Page404 from './Components/User/Page404/Page404';
 import SaleReturn from './Components/Product/SaleReturn'
-import middleware from './Components/Middleware/middleware';
 import LoginAdmin from './Components/User/Admin/LoginAdmin';
 
 function App() {
@@ -44,13 +43,16 @@ function App() {
   //Si esta logueado guarda el usuario, lo decofifica y lo paso al header
   const [log, setLog] = useState({})
   const getLogin = ((local) => {
-    if (local != "") {
-      const decoded = jwt_decode(local)
-      setLog({
-        firstName: decoded.firstName,
-        lastName: decoded.lastName,
-        log: true
-      })
+    if (local !== "") {
+      try {
+        const decoded = jwt_decode(local)
+        setLog({
+          firstName: decoded.firstName,
+          lastName: decoded.lastName,
+          log: true
+        })
+      }
+      catch{console.log("error")}
     }
   })
 
@@ -74,7 +76,6 @@ function App() {
     fetch("http://localhost:4000/categories")
       .then(resp => resp.json())
       .then(data => {
-
         setCategories({
           ...categories,
           categories: data
@@ -103,7 +104,7 @@ function App() {
 
     getLogin(userLog);
     setear(productXMayor.length, productXMenor.length)
-  }, [])
+  }, [ ])
 
   function getById(id) {
     fetch("http://localhost:4000/products/" + id)

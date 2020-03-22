@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-    BrowserRouter as Router,
     Link
 } from "react-router-dom";
 import {
@@ -10,8 +9,7 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    NavbarText
+    NavLink
 } from 'reactstrap';
 import carrito from '../../imgs/shopping-cart-symbol-for-e-commerce_icon-icons.com_56124.png';
 import './header.css';
@@ -19,13 +17,6 @@ import logo from '../../imgs/Jokker 2.png';
 
 
 export default function Header(props) {
-
-
-    const [state, setstate] = useState({
-        product: [],
-        log: false,
-        nombre: ""
-    });
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -71,7 +62,7 @@ export default function Header(props) {
                         </Nav>
                     </Collapse>
                     <Link to='/cart' className="">
-                        <img className="img-fluid" src={carrito} />
+                        <img className="img-fluid" alt="carrito" src={carrito} />
                         <span class="badge badge-danger rounded-circle img-fluid">{props.cartLength}</span>
                     </Link>
                 </Navbar>

@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import approved from '../imgs/jokkerAPROBADO.png';
 import rejected from '../imgs/JOKKERRECHAZADO.png';
+import inProcess from '../imgs/JOKKERPENDIENTE.png';
 
 export default function SaleReturn() {
-    const [sale, setSale] = useState({ products: "" })
+
 
     let id = window.location.search
     const urlParams = new URLSearchParams(id)
     let idSale = urlParams.get('external_reference');
     let saleState = urlParams.get('collection_status');
+
     useEffect(() => {
         changeStatusSale(idSale, saleState);
         saleApproved(saleState, idSale);
-    }, [])
+    }, [id, urlParams, idSale, saleState])
 
     function saleApproved(resp, idsale) {
         if (resp === "approved") {
@@ -64,18 +66,49 @@ export default function SaleReturn() {
             })
     }
 
-    if (saleState === "approved") {
-        return (
-            <div className="container-fluid col-12">
-                <a href="http://localhost:3000"><img className="img-fluid" src={approved} ></img></a>
-            </div>
-        )
-    } else if (saleState === "rejected") {
-        return (
-            <div className="container-fluid col-12">
-                <a href="http://localhost:3000"><img className="img-fluid" src={rejected}></img></a>
-            </div>
-        )
+    console.log(saleState)
+    switch (saleState) {
+        case "approved":
+            return (
+                <div className="container-fluid col-12">
+                    <a href="http://localhost:3000"><img className="img-fluid" src={approved} alt="aprobado" ></img></a>
+                </div>
+            )
+        case "rejected":
+            return (
+                <div className="container-fluid col-12">
+                    <a href="http://localhost:3000"><img className="img-fluid" alt="rechazado" src={rejected}></img></a>
+                </div>
+            )
+        case "in_process":
+            return (
+                <div className="container-fluid col-12">
+                    <a href="http://localhost:3000"><img className="img-fluid" alt="rechazado" src={inProcess}></img></a>
+                </div>
+            )
+        default:
+            break;
     }
+
+    // if (saleState === "approved") {
+    //     return (
+    //         <div className="container-fluid col-12">
+    //             <a href="http://localhost:3000"><img className="img-fluid" src={approved} alt="aprovado" ></img></a>
+    //         </div>
+    //     )
+    // } else if (saleState === "rejected") {
+    //     return (
+    //         <div className="container-fluid col-12">
+    //             <a href="http://localhost:3000"><img className="img-fluid" alt="rechazado" src={rejected}></img></a>
+    //         </div>
+    //     )
+    // }
+    // else if (saleState === "CALL") {
+    //     return (
+    //         <div className="container-fluid col-12">
+    //             <a href="http://localhost:3000"><img className="img-fluid" alt="rechazado" src={rejected}></img></a>
+    //             <p> ***Rechazado con validación para autorizar</p>
+    //         </div>
+    //     )
 
 }

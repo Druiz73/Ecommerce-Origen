@@ -17,7 +17,7 @@ export default function VentasAdmin() {
 
     useEffect(() => {
         getVentas();
-    }, {})
+    }, [])
 
     function getVentas() {
         fetch(`http://localhost:4000/sales`)

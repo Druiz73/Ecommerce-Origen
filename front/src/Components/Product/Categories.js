@@ -12,8 +12,6 @@ export default function Categories(props) {
         return "/productPage/" + id
     }
 
-
-
     return (
         <div className="col-12">
             <div className="container-fluid section">
@@ -30,10 +28,10 @@ export default function Categories(props) {
                             </div>
                     }
                     <div className="row d-flex justify-content-around">
-                        {props.products.map((element) => ( element.stock > 0 ?
+                        {props.products.map((element) => (element.stock > 0 ?
                             <div className="card m-1 mb-3 mt-3 mr-3 col-12 col-lg-3 item-border cards" id={element.category}>
                                 <div className="row no-gutters">
-                                    <img className="img-fluid" src={element.imageUrl['0'].base64} />
+                                    <img className="img-fluid" alt="producto" src={element.imageUrl['0'].base64} />
                                     <div class="col-md-12">
                                         <div class="card-body">
                                             <h3 class="card-title text-center">{element.titulo}</h3>
@@ -54,13 +52,12 @@ export default function Categories(props) {
                                         </div>
                                     </div>
                                 </div>
-                            </div> : <div className="d-none"/>
+                            </div> : <div className="d-none" />
                         ))}
                     </div>
                 </div>
                 <div className="col-12 my-3">
-                    {props.typeSale === "mayorista" ? <Link><img onClick={(valor) => props.getTipoVenta("minorista")} className="img-fluid" src={imgMenor} /> </Link> : <Link><img onClick={(valor) => props.getTipoVenta("mayorista")} className="img-fluid" src={imgMayor} /> </Link>}
-
+                    {props.typeSale === "mayorista" ? <Link><img onClick={(valor) => props.getTipoVenta("minorista")} alt="mayorista" className="img-fluid" src={imgMenor} /> </Link> : <Link><img onClick={(valor) => props.getTipoVenta("mayorista")} alt="mayorista" className="img-fluid" src={imgMayor} /> </Link>}
                 </div>
             </div>
         </div>

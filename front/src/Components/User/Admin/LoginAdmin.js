@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Button,  CardBody,  Col,  Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 export default function LoginAdmin() {
@@ -43,7 +43,7 @@ export default function LoginAdmin() {
       .then(res => res.json())
       .then(data => {
 
-        if (data.error == "user does not exist") {
+        if (data.error === "user does not exist") {
           alert("email y contraseña no coinciden")
         }
         else {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Form, FormGroup, Label, Input, Checkbox, Table } from 'reactstrap';
+import React, { useState } from 'react';
+import { Button, Form, FormGroup, Label, Input,  Table } from 'reactstrap';
 
 export default function Category(props) {
     const [category, setcategory] = useState({
