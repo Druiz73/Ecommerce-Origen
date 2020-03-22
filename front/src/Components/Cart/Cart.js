@@ -83,7 +83,6 @@ export default function Carrito(props) {
             .then(res => res.json())
             .then(data => window.location.href = data.init_point)
             .catch(err => console.error(err, "error"))
-        window.location.href = data.init_point
         artMEnor.splice(artMEnor);
         setArtMEnor(artMEnor);
         localStorage.setItem('minorista', JSON.stringify(artMEnor));
