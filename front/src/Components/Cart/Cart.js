@@ -56,7 +56,7 @@ export default function Carrito(props) {
                 }
             })
                 .then(res => res.json())
-                .then(data => console.log(data.init_point))
+                .then(data => window.location.href = data.init_point)
                 .catch(err => console.error(err, "error"))
 
             artMayor.splice(artMayor);
@@ -81,9 +81,9 @@ export default function Carrito(props) {
             }
         })
             .then(res => res.json())
-            .then(data => console.log(data.init_point))
+            .then(data => window.location.href = data.init_point)
             .catch(err => console.error(err, "error"))
-        // window.location.href = data.init_point
+        window.location.href = data.init_point
         artMEnor.splice(artMEnor);
         setArtMEnor(artMEnor);
         localStorage.setItem('minorista', JSON.stringify(artMEnor));

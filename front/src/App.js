@@ -52,7 +52,7 @@ function App() {
           log: true
         })
       }
-      catch{console.log("error")}
+      catch{ console.log("no logueado") }
     }
   })
 
@@ -62,7 +62,6 @@ function App() {
   const productXMenor = JSON.parse(localStorage.getItem("minorista")) || [];
   const totalCart = productXMayor.length + productXMenor.length;
   const [cartLength, setCartLength] = useState(totalCart);
-
   function setear(mayor, menor) {
     let total = mayor + menor
     setCartLength(total);
@@ -104,7 +103,7 @@ function App() {
 
     getLogin(userLog);
     setear(productXMayor.length, productXMenor.length)
-  }, [ ])
+  }, [])
 
   function getById(id) {
     fetch("http://localhost:4000/products/" + id)

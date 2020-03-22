@@ -38,7 +38,6 @@ class Register extends Component {
       })
         .then(resp => resp.json())
         .then(data => {
-          console.log(data)
           if (data) {
             this.setState({registered: true})
           }
@@ -48,7 +47,6 @@ class Register extends Component {
       alert("las contraseñas no coinciden")
     }
   }
-
 
   render() {
     if (this.state.registered) {

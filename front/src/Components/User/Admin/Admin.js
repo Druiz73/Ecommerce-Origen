@@ -84,7 +84,6 @@ export default class Admin extends Component {
             })
                 .then(resp => resp.json())
                 .then(data => {
-                    console.log(data)
                     this.get();
                     this.getCategory();
                 });

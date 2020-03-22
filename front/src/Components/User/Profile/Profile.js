@@ -16,14 +16,13 @@ class Profile extends Component {
         const token = localStorage.usertoken;
         fetch("http://localhost:4000/user/profile",{ headers: { Authorization: token }})
         .then(response => {
-            console.log(response)
             return response.data
           })
           .catch(err => {
             console.log(err)
           })
         
-        console.log(token)
+        // console.log(token)
         // const decoded = jwt_decode(token)
         // console.log(decoded)
         // this.setState({

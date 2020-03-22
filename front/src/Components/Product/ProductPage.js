@@ -17,7 +17,6 @@ export default function ProductPage(props) {
     let { id } = useParams();
 
     useEffect(() => {
-        
         fetch("http://localhost:4000/products/cart/" + id)
             .then(resp => resp.json())
             .then(data => {
@@ -32,18 +31,16 @@ export default function ProductPage(props) {
         let checked = false;
         let talle;
         for (let i = 0; i < document.check.elements.length; i++) {
-            if (document.check.elements[i].checked === "1")
-                checked = true
+            if (document.check.elements[i].checked == true)
+                checked = true;
         }
         if (checked) {
             if (props.typeSale.sale === "mayorista") {
 
                 if (quantity >= 1) {
                     for (let i = 0; i < document.check.elements.length; i++) {
-                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked === "1") {
-
+                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked == true) {
                             talle = document.check.elements[i].value;
-
                         }
                     }
                     productXMayor.push({ ...product, quantity, talles: talle, price: product.precioMayor })
@@ -59,7 +56,7 @@ export default function ProductPage(props) {
             else if (props.typeSale.sale === "minorista") {
                 if (quantity >= 1) {
                     for (let i = 0; i < document.check.elements.length; i++) {
-                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked === "1") {
+                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked == true) {
                             talle = document.check.elements[i].value;
                         }
                     }
