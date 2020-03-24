@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, CardBody, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import apiUrl from '../../../config';
 
 
 export default function LoginAdmin() {
@@ -48,7 +49,7 @@ export default function LoginAdmin() {
           }
           else if (data.message === "Login Successfully") {
             localStorage.setItem('jokker', data.token);
-            window.location.href = 'http://localhost:3000/administrar/admin';
+            window.location.href = `${apiUrl}/administrar/admin`;
           }
         })
     } else {

@@ -11,11 +11,18 @@ import registerRouter from './routes/register';
 import saleRouter from './routes/sales';
 import adminRouter from './routes/admins';
 import suscriberRouter from './routes/suscribers';
+import mongoose from 'mongoose';
 
 
 // Agrega credenciales
 mercadopago.configure({
     access_token: 'TEST-4338767001765102-031414-316e8537f8e6023b2165733934397426-168068507' // agregar el TOKEN de cada uno!
+});
+
+mongoose.connect('mongodb://localhost:27017/jokkerDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+
 });
 
 const app = express();

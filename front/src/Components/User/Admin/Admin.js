@@ -6,6 +6,7 @@ import TableProducts from './TableProducts';
 import Category from './Category';
 import Suscribers from './Suscribers';
 import Sales from './Sales';
+import apiUrl from '../../../config';
 
 
 export default class Admin extends Component {
@@ -244,7 +245,7 @@ export default class Admin extends Component {
             );
         }
         else {
-            window.location.href = 'http://localhost:3000/badway'
+            window.location.href = `${apiUrl}/badway`
         }
     }
 }

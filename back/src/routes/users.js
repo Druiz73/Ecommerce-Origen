@@ -1,15 +1,9 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import users from '../models/user';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 process.env.SECRET_KEY = 'secret';
-
-
-mongoose.connect('mongodb://localhost:27017/jokkerDB', {
-    useNewUrlParser: true
-});
 
 var router = express.Router();
 
