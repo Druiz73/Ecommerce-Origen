@@ -70,24 +70,28 @@ export default function Carrito(props) {
     //SAle of minority price
     function retailSale(e) {
         e.preventDefault()
-        fetch(`http://localhost:4000/sales`, {
-            method: "POST",
-            body: JSON.stringify({
-                products: artMEnor
-            }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => window.location.href = data.init_point)
-            .catch(err => console.error(err, "error"))
-        artMEnor.splice(artMEnor);
-        setArtMEnor(artMEnor);
-        localStorage.setItem('minorista', JSON.stringify(artMEnor));
-        props.setear(props.productXMayor.length, artMEnor.length)
-
+        if(artMEnor.length !==0){
+            fetch(`http://localhost:4000/sales`, {
+                method: "POST",
+                body: JSON.stringify({
+                    products: artMEnor
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => window.location.href = data.init_point)
+                .catch(err => console.error(err, "error"))
+            artMEnor.splice(artMEnor);
+            setArtMEnor(artMEnor);
+            localStorage.setItem('minorista', JSON.stringify(artMEnor));
+            props.setear(props.productXMayor.length, artMEnor.length)
+        }
+        else{
+            alert('El carrito esta vacio')
+        }
     }
 
     return (

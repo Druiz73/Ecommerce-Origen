@@ -31,7 +31,7 @@ export default function ProductPage(props) {
         let checked = false;
         let talle;
         for (let i = 0; i < document.check.elements.length; i++) {
-            if (document.check.elements[i].checked == true)
+            if (document.check.elements[i].checked === true)
                 checked = true;
         }
         if (checked) {
@@ -39,7 +39,7 @@ export default function ProductPage(props) {
 
                 if (quantity >= 1) {
                     for (let i = 0; i < document.check.elements.length; i++) {
-                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked == true) {
+                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked === true) {
                             talle = document.check.elements[i].value;
                         }
                     }
@@ -56,7 +56,7 @@ export default function ProductPage(props) {
             else if (props.typeSale.sale === "minorista") {
                 if (quantity >= 1) {
                     for (let i = 0; i < document.check.elements.length; i++) {
-                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked == true) {
+                        if (document.check.elements[i].type === "checkbox" && document.check.elements[i].checked === true) {
                             talle = document.check.elements[i].value;
                         }
                     }

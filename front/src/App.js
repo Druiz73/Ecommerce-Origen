@@ -10,7 +10,6 @@ import Body from './Components/Home/Home/Body';
 import Header from './Components/Home/Header/Header';
 import Footer from './Components/Home/Footer/Footer';
 import ProductPage from './Components/Product/ProductPage';
-import Admin from './Components/User/Admin/Admin';
 import Categories from './Components/Product/Categories';
 import Register from './Components/User/Register/Register';
 import Login from './Components/User/Login/Login';
@@ -18,7 +17,7 @@ import Profile from './Components/User/Profile/Profile';
 import Cart from './Components/Cart/Cart';
 import Page404 from './Components/User/Page404/Page404';
 import SaleReturn from './Components/Product/SaleReturn'
-import LoginAdmin from './Components/User/Admin/LoginAdmin';
+import UserRoutes from './Components/User/Admin/UserRoutes';
 
 function App() {
   const [Items, setItems] = useState({
@@ -105,6 +104,7 @@ function App() {
     setear(productXMayor.length, productXMenor.length)
   }, [])
 
+  //envio id de categorias, busco productos por categorias y categorias en sí
   function getById(id) {
     fetch("http://localhost:4000/products/" + id)
       .then(resp => resp.json())
@@ -126,7 +126,7 @@ function App() {
     <Router>
       <Header log={log} categories={categories.categories} getTipoVenta={(valor) => getTipoVenta(valor)} getById={(id) => getById(id)} cartLength={cartLength} />
       <Switch>
-        <Route path="/administrar" component={LoginAdmin} />
+        <Route path="/administrar" component={UserRoutes} />
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
         <Route path="/returnMercado" component={SaleReturn} />
@@ -141,9 +141,6 @@ function App() {
         </Route>
         <Route path="/cart">
           <Cart setear={(mayor, menor) => setear(mayor, menor)} productXMayor={productXMayor} productXMenor={productXMenor} log={log} />
-        </Route>
-        <Route path="/admin" >
-          <Admin />
         </Route>
         <Route path="/" >
           <Body categoriesHome={Items.home} getById={(id) => getById(id)} productHome={productHome} />
