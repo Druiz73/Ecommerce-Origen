@@ -61,9 +61,9 @@ router.post('/', function (req, res, next) {
             let preference = {
                 items: products,
                 "back_urls": {
-                    "success": "http://localhost:3000/returnMercado",
-                    "failure": "http://localhost:3000/returnMercado",
-                    "pending": "http://localhost:3000/returnMercado"
+                    "success": "http://jokker-jeans.com/returnMercado",
+                    "failure": "http://jokker-jeans.com/returnMercado",
+                    "pending": "http://jokker-jeans.com/returnMercado"
                 },
                 "auto_return": "approved",
                 external_reference: data._id.toString()

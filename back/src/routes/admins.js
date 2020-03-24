@@ -5,11 +5,6 @@ import bcrypt from 'bcryptjs';
 import Admin from '../models/admin';
 process.env.SECRET_KEY = 'secret';
 
-
-mongoose.connect('mongodb://localhost:27017/jokkerDB', {
-    useNewUrlParser: true 
-});
-
 var router = express.Router();
 
 router.get('/', (req, res, next) => {

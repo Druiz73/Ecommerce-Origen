@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import approved from '../imgs/jokkerAPROBADO.png';
 import rejected from '../imgs/JOKKERRECHAZADO.png';
 import inProcess from '../imgs/JOKKERPENDIENTE.png';
+import apiUrl from '../../config';
 
 export default function SaleReturn() {
 
@@ -71,44 +72,22 @@ export default function SaleReturn() {
         case "approved":
             return (
                 <div className="container-fluid col-12">
-                    <a href="http://localhost:3000"><img className="img-fluid" src={approved} alt="aprobado" ></img></a>
+                    <a href={apiUrl}><img className="img-fluid" src={approved} alt="aprobado" ></img></a>
                 </div>
             )
         case "rejected":
             return (
                 <div className="container-fluid col-12">
-                    <a href="http://localhost:3000"><img className="img-fluid" alt="rechazado" src={rejected}></img></a>
+                    <a href={apiUrl}><img className="img-fluid" alt="rechazado" src={rejected}></img></a>
                 </div>
             )
         case "in_process":
             return (
                 <div className="container-fluid col-12">
-                    <a href="http://localhost:3000"><img className="img-fluid" alt="rechazado" src={inProcess}></img></a>
+                    <a href={apiUrl}><img className="img-fluid" alt="rechazado" src={inProcess}></img></a>
                 </div>
             )
         default:
             break;
     }
-
-    // if (saleState === "approved") {
-    //     return (
-    //         <div className="container-fluid col-12">
-    //             <a href="http://localhost:3000"><img className="img-fluid" src={approved} alt="aprovado" ></img></a>
-    //         </div>
-    //     )
-    // } else if (saleState === "rejected") {
-    //     return (
-    //         <div className="container-fluid col-12">
-    //             <a href="http://localhost:3000"><img className="img-fluid" alt="rechazado" src={rejected}></img></a>
-    //         </div>
-    //     )
-    // }
-    // else if (saleState === "CALL") {
-    //     return (
-    //         <div className="container-fluid col-12">
-    //             <a href="http://localhost:3000"><img className="img-fluid" alt="rechazado" src={rejected}></img></a>
-    //             <p> ***Rechazado con validación para autorizar</p>
-    //         </div>
-    //     )
-
 }
