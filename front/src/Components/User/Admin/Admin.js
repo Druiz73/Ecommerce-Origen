@@ -8,7 +8,6 @@ import Suscribers from './Suscribers';
 import Sales from './Sales';
 
 
-
 export default class Admin extends Component {
     constructor(props) {
         super(props);
@@ -79,7 +78,6 @@ export default class Admin extends Component {
                     descripcion: descripcion,
                     talles: talles,
                     category: category,
-
                 })
             })
                 .then(resp => resp.json())
@@ -91,7 +89,6 @@ export default class Admin extends Component {
         else {
             alert("Debe completar todos los campos")
         }
-
     }
 
     // CRUD CATEGORIAS
@@ -103,12 +100,9 @@ export default class Admin extends Component {
                     category: data
                 })
             });
-
     }
 
-
     saveCategory(nombre, image) {
-        console.log(image)
         let inputFile = document.getElementById("imageCat");
         fetch("http://localhost:4000/categories/create", {
             method: 'POST',
@@ -169,84 +163,88 @@ export default class Admin extends Component {
         })
     }
 
-
-
     render() {
-        return (
-            <div>
-                <Nav tabs>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '1' })}
-                            onClick={() => { this.toggle('1'); }}>
-                            Crear Categoria
+        let contextType = this.props.local;
+        if (contextType !== '') {
+            return (
+                <div>
+                    <Nav tabs>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({ active: this.state.activeTab === '1' })}
+                                onClick={() => { this.toggle('1'); }}>
+                                Crear Categoria
                         </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '2' })}
-                            onClick={() => { this.toggle('2'); }}>
-                            Crear Item
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({ active: this.state.activeTab === '2' })}
+                                onClick={() => { this.toggle('2'); }}>
+                                Crear Item
                         </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '3' })}
-                            onClick={() => { this.toggle('3'); }}>
-                            Editar item
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({ active: this.state.activeTab === '3' })}
+                                onClick={() => { this.toggle('3'); }}>
+                                Editar item
                          </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '4' })}
-                            onClick={() => { this.toggle('4'); }}>
-                            Subscriptores
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({ active: this.state.activeTab === '4' })}
+                                onClick={() => { this.toggle('4'); }}>
+                                Subscriptores
                          </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '5' })}
-                            onClick={() => { this.toggle('5'); }}>
-                            Ventas
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={classnames({ active: this.state.activeTab === '5' })}
+                                onClick={() => { this.toggle('5'); }}>
+                                Ventas
                          </NavLink>
-                    </NavItem>
-                </Nav>
-                <TabContent activeTab={this.state.activeTab}>
-                    <TabPane tabId="1">
-                        <Row>
-                            <Category handleInput={((e) => this.handleInput(e))} category={this.state.category} nombre={this.state.nombre} saveCategory={(nombre, image) => this.saveCategory(nombre, image)} deleteCategory={(id) => this.deleteCategory(id)} />
-                        </Row>
-                    </TabPane>
-                    <TabPane tabId="2">
-                        <Row>
-                            <Col sm="12">
-                                <Create imageUrl={this.state.imageUrl} multiple={true} getProducts={() => this.get()} onDone={(files) => this.getFiles(files)} category={this.state.category} />
-                            </Col>
-                        </Row>
-                    </TabPane>
-                    <TabPane tabId="3">
-                        <Row>
-                            <Col sm="12">
-                                <TableProducts categories={this.state.category} products={this.state.products} delete={(id) => this.delete(id)} edit={(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) => this.edit(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category)} />
-                            </Col>
-                        </Row>
-                    </TabPane>
-                    <TabPane tabId="4">
-                        <Row>
-                            <Col sm="12">
-                                <Suscribers suscribers={this.state.suscribers} delete={(id) => this.deleteSuscriber(id)} />
-                            </Col>
-                        </Row>
-                    </TabPane>
-                    <TabPane tabId="5">
-                        <Row>
-                            <Col sm="12">
-                                <Sales  />
-                            </Col>
-                        </Row>
-                    </TabPane>
-                </TabContent>
-            </div>
-        );
+                        </NavItem>
+                    </Nav>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="1">
+                            <Row>
+                                <Category handleInput={((e) => this.handleInput(e))} category={this.state.category} nombre={this.state.nombre} saveCategory={(nombre, image) => this.saveCategory(nombre, image)} deleteCategory={(id) => this.deleteCategory(id)} />
+                            </Row>
+                        </TabPane>
+                        <TabPane tabId="2">
+                            <Row>
+                                <Col sm="12">
+                                    <Create imageUrl={this.state.imageUrl} multiple={true} getProducts={() => this.get()} onDone={(files) => this.getFiles(files)} category={this.state.category} />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                        <TabPane tabId="3">
+                            <Row>
+                                <Col sm="12">
+                                    <TableProducts categories={this.state.category} products={this.state.products} delete={(id) => this.delete(id)} edit={(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) => this.edit(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category)} />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                        <TabPane tabId="4">
+                            <Row>
+                                <Col sm="12">
+                                    <Suscribers suscribers={this.state.suscribers} delete={(id) => this.deleteSuscriber(id)} />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                        <TabPane tabId="5">
+                            <Row>
+                                <Col sm="12">
+                                    <Sales />
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </TabContent>
+                </div>
+            );
+        }
+        else {
+            window.location.href = 'http://localhost:3000/badway'
+        }
     }
 }

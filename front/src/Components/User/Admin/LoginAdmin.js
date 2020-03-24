@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Button,  CardBody,  Col,  Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Button, CardBody, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+
+
 export default function LoginAdmin() {
   const [email, setEmail] = useState({
   })
@@ -9,8 +11,6 @@ export default function LoginAdmin() {
   const [pass, setPass] = useState({
   })
 
-  const [sec, setSec] = useState({
-  })
 
   function handleEmail(e) {
     const name = e.target.name;
@@ -28,30 +28,34 @@ export default function LoginAdmin() {
     })
   }
 
-  function handleLogin(email, password) {
-
-    fetch("http://localhost:4000/admin/login", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password
+  function handleLogin(userEmail, userPassword) {
+    if (userEmail !== undefined && userPassword !== undefined) {
+      fetch("http://localhost:4000/admin/login", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          password: userPassword
+        })
       })
-    })
-      .then(res => res.json())
-      .then(data => {
-
-        if (data.error === "user does not exist") {
-          alert("email y contraseña no coinciden")
-        }
-        else {
-          localStorage.setItem('adminToken', data.token);
-          setSec({ token: data.token })
-        }
-      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          if (data.message === "Login Failed") {
+            alert("email y contraseña no coinciden")
+          }
+          else if (data.message === "Login Successfully") {
+            localStorage.setItem('jokker', data.token);
+            window.location.href = 'http://localhost:3000/administrar/admin';
+          }
+        })
+    } else {
+      alert("ingrese todos los campos")
+    }
   }
+
   return (
     <div className="col-12 col-lg-6 mx-auto">
       <CardBody>
@@ -64,7 +68,7 @@ export default function LoginAdmin() {
                 <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
               </InputGroupText>
             </InputGroupAddon>
-            <Input type="text" value={email.username} name="username" placeholder="username" autoComplete="username" onChange={(e) => handleEmail(e)} />
+            <Input type="text" id="userName" value={email.username} name="username" placeholder="username" autoComplete="username" onChange={(e) => handleEmail(e)} required />
           </InputGroup>
           <InputGroup className="mb-4">
             <InputGroupAddon addonType="prepend">
@@ -72,11 +76,11 @@ export default function LoginAdmin() {
                 <FontAwesomeIcon icon={faLock}></FontAwesomeIcon>
               </InputGroupText>
             </InputGroupAddon>
-            <Input type="password" value={pass.password} name="password" placeholder="Password" autoComplete="current-password" onChange={(e) => handlePass(e)} />
+            <Input type="password" id="userPass" value={pass.password} name="password" placeholder="Password" autoComplete="current-password" onChange={(e) => handlePass(e)} required />
           </InputGroup>
           <Row>
             <Col xs="6">
-              <Button onClick={() => handleLogin(email.username, pass.password)} color="primary" className="px-4">Login</Button>
+              <Button type="button" id="buttonAdmin" onClick={() => handleLogin(email.username, pass.password)} color="primary" className="px-4">Login</Button>
             </Col>
           </Row>
         </Form>
@@ -84,3 +88,4 @@ export default function LoginAdmin() {
     </div>
   )
 }
+
