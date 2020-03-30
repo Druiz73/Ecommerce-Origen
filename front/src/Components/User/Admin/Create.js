@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import backUrl from '../../../configUrl'
 
 
 export default function Create(props) {
@@ -87,7 +88,7 @@ export default function Create(props) {
     function save(titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) {
         if(titulo!=="" && precioMayor!=="" && precioMenor !=="" && stock !=="" && descripcion!=="" && talles !=="" && category !=="" && imageUrl!=="" )
         {
-            fetch("http://localhost:4000/products/create", {
+            fetch(`${backUrl}/products/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

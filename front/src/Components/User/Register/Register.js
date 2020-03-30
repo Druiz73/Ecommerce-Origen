@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAt, faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import { Redirect } from "react-router-dom";
+import backUrl from '../../../configUrl'
 
 class Register extends Component {
   state = {
@@ -24,7 +25,7 @@ class Register extends Component {
 
   onClick(firstName, lastName, email, password) {
     if (this.state.password === this.state.check) {
-      fetch("http://localhost:4000/user/register", {
+      fetch(`${backUrl}/user/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
