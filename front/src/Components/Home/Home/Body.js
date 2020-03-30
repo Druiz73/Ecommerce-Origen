@@ -6,6 +6,7 @@ import envios from '../../imgs/envios.png';
 import pagos from '../../imgs/mediosDePago.png';
 import seguridad from '../../imgs/seguridad.png';
 import './home.css';
+import backUrl from '../../../configUrl'
 import {
     
     Link
@@ -26,7 +27,7 @@ export default function Body(props) {
 
     function saveSuscriber(email) {
         let inputFile = document.getElementById("suscribe");
-        fetch("http://localhost:4000/suscriber", {
+        fetch(`${backUrl}/suscriber`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

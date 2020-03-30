@@ -18,6 +18,7 @@ import Cart from './Components/Cart/Cart';
 import Page404 from './Components/User/Page404/Page404';
 import SaleReturn from './Components/Product/SaleReturn'
 import UserRoutes from './Components/User/Admin/UserRoutes';
+import backUrl from './configUrl'
 
 function App() {
   const [Items, setItems] = useState({
@@ -71,7 +72,7 @@ function App() {
 
   //Se ejecuta luego del renderizado, guarda las categorias
   useEffect(() => {
-    fetch("http://localhost:4000/categories")
+    fetch(`${backUrl}/categories`)
       .then(resp => resp.json())
       .then(data => {
         setCategories({
@@ -80,7 +81,7 @@ function App() {
         })
       });
 
-    fetch("http://localhost:4000/categories/home")
+    fetch(`${backUrl}/categories/home`)
       .then(resp => resp.json())
       .then(data => {
         setItems({
@@ -89,7 +90,7 @@ function App() {
         })
       });
 
-    fetch("http://localhost:4000/products/random", {
+    fetch(`${backUrl}/products/random`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -106,7 +107,7 @@ function App() {
 
   //envio id de categorias, busco productos por categorias y categorias en sí
   function getById(id) {
-    fetch("http://localhost:4000/products/" + id)
+    fetch(`${backUrl}/products/` + id)
       .then(resp => resp.json())
       .then(data => {
         setItems({
@@ -115,7 +116,7 @@ function App() {
         })
       })
 
-    fetch("http://localhost:4000/categories/" + id)
+    fetch(`${backUrl}/categories/` + id)
       .then(resp => resp.json())
       .then(data => {
         setProductCat({ ...productCat, nombre: data.nombre })

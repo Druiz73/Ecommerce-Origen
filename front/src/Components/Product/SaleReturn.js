@@ -3,6 +3,7 @@ import approved from '../imgs/jokkerAPROBADO.png';
 import rejected from '../imgs/JOKKERRECHAZADO.png';
 import inProcess from '../imgs/JOKKERPENDIENTE.png';
 import apiUrl from '../../config';
+import backUrl from '../../configUrl'
 
 export default function SaleReturn() {
 
@@ -26,7 +27,7 @@ export default function SaleReturn() {
     //Traer venta y Cambiar el estado
     function changeStatusSale(id, state) {
         //modificar estado
-        fetch("http://localhost:4000/sales/" + id, {
+        fetch(`${backUrl}/sales/` + id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,7 +42,7 @@ export default function SaleReturn() {
 
     //traer venta, guardar en un estado los productos vendidos
     function getSale(id) {
-        fetch("http://localhost:4000/sales/" + id)
+        fetch(`${backUrl}/sales/` + id)
             .then(resp => resp.json())
             .then(data => {
                 sendProductToUpdate(data.products)
@@ -52,7 +53,7 @@ export default function SaleReturn() {
 
     function sendProductToUpdate(products) {
 
-        fetch("http://localhost:4000/products/sale", {
+        fetch(`${backUrl}/products/sale`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

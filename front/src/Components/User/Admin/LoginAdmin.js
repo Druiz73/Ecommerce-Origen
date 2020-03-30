@@ -3,6 +3,7 @@ import { Button, CardBody, Col, Form, Input, InputGroup, InputGroupAddon, InputG
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 import apiUrl from '../../../config';
+import backUrl from '../../../configUrl'
 
 
 export default function LoginAdmin() {
@@ -31,7 +32,7 @@ export default function LoginAdmin() {
 
   function handleLogin(userEmail, userPassword) {
     if (userEmail !== undefined && userPassword !== undefined) {
-      fetch("http://localhost:4000/admin/login", {
+      fetch(`${backUrl}/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

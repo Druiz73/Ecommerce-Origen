@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Table } from 'reactstrap';
 import classnames from 'classnames';
+import backUrl from '../../configUrl'
 
 export default function Carrito(props) {
     const [artMayor, setArtMayor] = useState(props.productXMayor);
@@ -45,7 +46,7 @@ export default function Carrito(props) {
     function wholesale(e) {
         e.preventDefault()
         if (totalMayor !== 0 && totalMayor > 3500) {
-            fetch(`http://localhost:4000/sales`, {
+            fetch(`${backUrl}/sales`, {
                 method: "POST",
                 body: JSON.stringify({
                     products: artMayor
@@ -71,7 +72,7 @@ export default function Carrito(props) {
     function retailSale(e) {
         e.preventDefault()
         if(artMEnor.length !==0){
-            fetch(`http://localhost:4000/sales`, {
+            fetch(`${backUrl}/sales`, {
                 method: "POST",
                 body: JSON.stringify({
                     products: artMEnor

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'reactstrap';
 import moment from 'moment';
+import backUrl from '../../../configUrl'
 
 export default function VentasAdmin() {
     const [ventas, setVentas] = useState({
@@ -20,7 +21,7 @@ export default function VentasAdmin() {
     }, [])
 
     function getVentas() {
-        fetch(`http://localhost:4000/sales`)
+        fetch(`${backUrl}/sales`)
             .then(resp => resp.json())
             .then(data => {
                 setVentas({
@@ -55,8 +56,6 @@ export default function VentasAdmin() {
 
         file.innerHTML += `Venta Total: ${(element.toString())}`;
     }
-
-
 
     return (
         <body>

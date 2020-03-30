@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, useParams } from "react-router-dom";
 import { Form, FormGroup, Label, Input } from 'reactstrap';
+import backUrl from '../../configUrl'
 
 
 
@@ -17,7 +18,7 @@ export default function ProductPage(props) {
     let { id } = useParams();
 
     useEffect(() => {
-        fetch("http://localhost:4000/products/cart/" + id)
+        fetch(`${backUrl}/products/cart/` + id)
             .then(resp => resp.json())
             .then(data => {
                 var image = data.imageUrl[0].base64;

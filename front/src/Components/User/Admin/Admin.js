@@ -7,6 +7,7 @@ import Category from './Category';
 import Suscribers from './Suscribers';
 import Sales from './Sales';
 import apiUrl from '../../../config';
+import backUrl from '../../../configUrl'
 
 
 export default class Admin extends Component {
@@ -36,7 +37,7 @@ export default class Admin extends Component {
 
     // CRUD PRODUCTOS
     get() {
-        fetch("http://localhost:4000/products")
+        fetch(`${backUrl}/products`)
             .then(resp => resp.json())
             .then(data => {
                 this.setState({
@@ -44,7 +45,7 @@ export default class Admin extends Component {
                 })
             });
 
-        fetch("http://localhost:4000/suscriber")
+        fetch(`${backUrl}/suscriber`)
             .then(resp => resp.json())
             .then(data => {
                 this.setState({
@@ -54,7 +55,7 @@ export default class Admin extends Component {
     }
 
     delete(id) {
-        fetch(`http://localhost:4000/products/delete/${id}`, {
+        fetch(`${backUrl}/products/delete/${id}`, {
             method: 'DELETE'
         })
             .catch(err => console.error(err))
@@ -66,7 +67,7 @@ export default class Admin extends Component {
     edit(id, titulo, precioMayor, precioMenor, stock, descripcion, talles, category, imageUrl) {
         if (id !== "" && titulo !== "" && precioMayor !== "" && precioMenor !== "" && stock !== "" && descripcion !== "" && talles !== "" && category !== "" && imageUrl !== "") {
 
-            fetch("http://localhost:4000/products/edit/" + id, {
+            fetch(`${backUrl}/products/edit/`+ id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -94,7 +95,7 @@ export default class Admin extends Component {
 
     // CRUD CATEGORIAS
     getCategory() {
-        fetch("http://localhost:4000/categories")
+        fetch(`${backUrl}/categories`)
             .then(resp => resp.json())
             .then(data => {
                 this.setState({
@@ -105,7 +106,7 @@ export default class Admin extends Component {
 
     saveCategory(nombre, image) {
         let inputFile = document.getElementById("imageCat");
-        fetch("http://localhost:4000/categories/create", {
+        fetch(`${backUrl}/categories/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -124,7 +125,7 @@ export default class Admin extends Component {
     }
 
     deleteCategory(id) {
-        fetch(`http://localhost:4000/categories/delete/${id}`, {
+        fetch(`${backUrl}/categories/delete/${id}`, {
             method: 'DELETE'
         })
             .catch(err => console.error(err))
@@ -135,7 +136,7 @@ export default class Admin extends Component {
 
     //delete suscriber
     deleteSuscriber(id) {
-        fetch(`http://localhost:4000/suscriber/${id}`, {
+        fetch(`${backUrl}/suscriber/${id}`, {
             method: 'DELETE'
         })
             .catch(err => console.error(err))
