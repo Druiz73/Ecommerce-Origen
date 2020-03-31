@@ -6,7 +6,7 @@
 
 import app from '../app';
 import debugLib from 'debug';
-import http from 'http';
+import https from 'https';
 
 const debug = debugLib('express-es6-sample:server');
 
@@ -21,7 +21,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
