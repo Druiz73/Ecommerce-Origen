@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+import fs from 'fs';
 import app from '../app';
 import debugLib from 'debug';
 import https from 'https';
@@ -17,11 +17,26 @@ const debug = debugLib('express-es6-sample:server');
 const port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
+
+// Certificate
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/jokker-jeans.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/jokker-jeans.com/fullchain.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/jokker-jeans.com/chain.pem', 'utf8');
+
+const credentials = {
+key: privateKey,
+cert: certificate,
+ca: ca
+};
+
+var cors = require('cors')
+app.use(cors())
+
 /**
  * Create HTTP server.
  */
 
-const server = https.createServer(app);
+const server = https.createServer(credentials,app);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -88,3 +103,4 @@ function onListening() {
   console.log(`Listening on ${bind}`);
   debug('Listening on ' + bind);
 }
+

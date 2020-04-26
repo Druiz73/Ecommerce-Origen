@@ -43,14 +43,12 @@ export default function Header(props) {
                         {props.log.log ? <h5 className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Bienvenido {props.log.firstName.toUpperCase()} {props.log.lastName.toUpperCase()} </h5> :
                             <Link to="/login" className="text-white text-center mx-sm-auto  mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Iniciar Sesión </Link>
                         }
-                        <Link onClick={(valor) => props.getTipoVenta("mayorista")} className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Mayorista </Link>
-                        <Link onClick={(valor) => props.getTipoVenta("minorista")} className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight">Minorista</Link>
+                        <a onClick={(valor) => props.getTipoVenta("mayorista")} className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight border-right border-white">Mayorista </a>
+                        <a onClick={(valor) => props.getTipoVenta("minorista")} className="text-white text-center mx-sm-auto mx-lg-auto p-2 flex-fill bd-highlight">Minorista</a>
                     </div>
                 </div>
                 <Navbar color="light" light expand="md" className="container-fluid">
-                    <Link className="logo col-sm-2 col-lg-2 my-auto" to="/">
-                        <NavbarBrand ><img className="img-fluid" src={logo} width="120" height="120" alt="" /> </NavbarBrand>
-                    </Link>
+                    <NavbarBrand  href="/" className="logo col-sm-2 col-lg-2 my-auto" ><img className="img-fluid" src={logo} width="120" height="120" alt="" /> </NavbarBrand>
                     <NavbarToggler onClick={toggle} />
                     <Collapse isOpen={isOpen} navbar>
                         <Nav className="d-flex justify-content-between mx-auto " navbar>
@@ -63,7 +61,7 @@ export default function Header(props) {
                     </Collapse>
                     <Link to='/cart' className="">
                         <img className="img-fluid" alt="carrito" src={carrito} />
-                        <span class="badge badge-danger rounded-circle img-fluid">{props.cartLength}</span>
+                        <span className="badge badge-danger rounded-circle img-fluid">{props.cartLength}</span>
                     </Link>
                 </Navbar>
             </div>

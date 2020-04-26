@@ -122,7 +122,7 @@ export default function Body(props) {
                     </div>
                     <div className="col-12 col-sm-5 col-lg-6  d-flex justify-content-center">
                         <input className="h-35 w-75 w-sm-100 my-auto" onChange={(e) => handleSubscription(e)} id="suscribe" type="email" name="email" value={suscribe.email} placeholder="Ingresa tu email" />
-                        <button type="button" onClick={() => saveSuscriber(suscribe.email)} class="btn btn-dark btn-large h-35 my-auto ml-1"><i class="fa fa-arrow-right "></i></button>
+                        <button type="button" onClick={() => saveSuscriber(suscribe.email)} className="btn btn-dark btn-large h-35 my-auto ml-1"><i className="fa fa-arrow-right "></i></button>
                     </div>
                 </div>
             </div>
